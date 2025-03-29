@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "dev": "compiiile dev",
+        "build": "compiiile build",
+        "preview": "compiiile preview"
+    }
+}
