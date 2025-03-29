@@ -1,2 +1,5 @@
+[build]
+  command = "npm install && npm run build"
+  publish = "/.compiiile/dist"
 [build.environment]
-  NODE_VERSION = "16"
+  NODE_VERSION = "22"
