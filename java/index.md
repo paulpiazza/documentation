@@ -20,32 +20,31 @@ order: 0
 - Coursebook [Algorithms 4th Edition](http://algs4.cs.princeton.edu/home/)
 - [Hyperskill](https://hi.hyperskill.org/) is a fairly new resource from _Jetbrains_ (the maker of IntelliJ)
     
-
 ## Certifications
 
-### 1. **Oracle Certified Associate, Java SE Programmer (OCA)**
+### Oracle Certified Associate, Java SE Programmer (OCA)
    - **Description** : C'est une certification d'entrée qui couvre les bases de la programmation Java. Elle est souvent recommandée comme première étape avant l'OCP.
    - **Niveau** : Débutant à intermédiaire.
 
-### 2. **Oracle Certified Professional, Java SE Programmer (OCP)**
+### Oracle Certified Professional, Java SE Programmer (OCP)
    - **Description** : Cette certification est destinée aux développeurs Java expérimentés. Elle valide des compétences avancées en programmation Java.
    - **Niveau** : Intermédiaire à avancé.
 
-### 3. **Spring Professional Certification**
+### Spring Professional Certification
    - **Description** : Cette certification est axée sur le framework Spring, largement utilisé dans le développement d'applications Java.
    - **Niveau** : Intermédiaire à avancé.
 
-### 4. **Java EE 7 Application Developer Certification**
+### Java EE 7 Application Developer Certification
    - **Description** : Cette certification se concentre sur le développement d'applications d'entreprise avec Java EE.
    - **Niveau** : Intermédiaire à avancé.
 
-### 5. **Certified Java Developer (CJD)**
+### Certified Java Developer (CJD)
    - **Description** : Proposée par certaines organisations, elle valide des compétences en développement Java, mais peut varier en termes de contenu et de reconnaissance.
 
-### 6. **AWS Certified Developer - Associate**
+### AWS Certified Developer - Associate
    - **Description** : Bien que ce ne soit pas spécifique à Java, cette certification est utile si vous travaillez avec des applications Java sur AWS.
    - **Niveau** : Intermédiaire.
 
-### 7. **Google Cloud Professional Cloud Developer**
+### Google Cloud Professional Cloud Developer
    - **Description** : Cette certification valide des compétences en développement sur Google Cloud, y compris des applications Java.
    - **Niveau** : Intermédiaire à avancé.
