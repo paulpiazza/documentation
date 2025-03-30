@@ -6,6 +6,12 @@ order: 4
 ## Définition et utilité d'un EC2
 Amazon Elastic Compute Cloud (EC2) est un service web qui fournit des capacités de calcul redimensionnables dans le cloud. Il permet aux utilisateurs de louer des machines virtuelles pour exécuter leurs applications. EC2 est conçu pour rendre le cloud computing plus accessible et flexible, en offrant des options de configuration variées pour répondre aux besoins spécifiques des utilisateurs.
 
+Service d'infrastructure en tant que service (IaaS) permettant de lancer et gérer des instances virtuelles. Vous devez gérer la configuration des instances, le système d'exploitation, les mises à jour, la sécurité et le dimensionnement selon vos besoins.
+
+Offre un contrôle total sur l'environnement de calcul, ce qui est avantageux pour des applications nécessitant des configurations spécifiques ou des logiciels non pris en charge en mode serverless.
+
+La facturation se fait en fonction du type d'instance, de la durée d'utilisation et des ressources consommées (par exemple, stockage et bande passante).
+
 ## Configuration d'une instance EC2 
 La configuration d'une instance EC2 implique plusieurs étapes :
 1. **Choix de l'AMI (Amazon Machine Image)** : Une AMI contient le système d'exploitation et les logiciels nécessaires.
