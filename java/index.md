@@ -19,11 +19,17 @@ La JVM inclut également un ramasse-miettes (garbage collector) qui gère automa
 2. Installez le JDK :
 Installation `sudo apt update && sudo apt install default-jdk`
 4. Vérifiez l'installation : `java -version`
-5. Configurez les variables d'environnement si nécessaire (par exemple, `JAVA_HOME`). Trouver le chemin d'installation `readlink -f $(which java)`
-Modifier le fichier de configuration (par exemple, ~/.bashrc ou ~/.profile) pour ajouter :
+5. Configurez les variables d'environnement si nécessaire (par exemple, `JAVA_HOME`).
+
 ```shell
+#Trouver le chemin d'installation 
+readlink -f $(which java)
+
+# Modifier le fichier de configuration (par exemple, ~/.bashrc ou ~/.profile) pour ajouter :
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 export PATH=$PATH:$JAVA_HOME/bin
+
+# reload le source
 source ~/.bashrc
 ```
 
