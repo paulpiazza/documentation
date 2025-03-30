@@ -13,11 +13,44 @@ String nom = "Alice"; // Variable de type chaîne de caractères
 ```
 
 ## Les types
-Java est un langage fortement typé. Voici les principaux types de données :
-- **int** : pour les nombres entiers.
-- **double** : pour les nombres à virgule flottante.
-- **char** : pour les caractères.
-- **boolean** : pour les valeurs vraies ou fausses.
+Java est un langage fortement typé.
+
+- **Entier (`int`)**
+  - **Plage :** -2 147 483 648 à 2 147 483 647
+  - **Description :** Un entier signé 32 bits utilisé pour les nombres entiers.
+
+- **Long (`long`)**
+  - **Plage :** -9 223 372 036 854 775 808 à 9 223 372 036 854 775 807
+  - **Description :** Un entier signé 64 bits pour les nombres entiers plus grands.
+
+- **Flottant (`float`)**
+  - **Plage :** Environ ±3,40282347E+38F (7 chiffres décimaux)
+  - **Description :** Un nombre à virgule flottante 32 bits pour les valeurs décimales.
+
+- **Double (`double`)**
+  - **Plage :** Environ ±1,79769313486231570E+308 (15 chiffres décimaux)
+  - **Description :** Un nombre à virgule flottante 64 bits pour des valeurs décimales précises.
+
+- **Caractère (`char`)**
+  - **Plage :** 0 à 65 535 (non signé)
+  - **Description :** Un caractère Unicode 16 bits.
+
+- **Booléen (`boolean`)**
+  - **Plage :** `true` ou `false`
+  - **Description :** Représente l'une des deux valeurs, généralement utilisé pour les opérations logiques.
+
+- **Octet (`byte`)**
+  - **Plage :** -128 à 127
+  - **Description :** Un entier signé 8 bits, utile pour économiser de la mémoire dans de grands tableaux.
+
+- **Court (`short`)**
+  - **Plage :** -32 768 à 32 767
+  - **Description :** Un entier signé 16 bits, utilisé pour économiser de la mémoire dans de grands tableaux.
+
+- **Chaîne (`String`)**
+  - **Plage :** N/A
+  - **Description :** Une séquence de caractères, utilisée pour le texte.
+
 
 Exemple :
 ```java
