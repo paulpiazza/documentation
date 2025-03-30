@@ -17,10 +17,15 @@ La JVM inclut également un ramasse-miettes (garbage collector) qui gère automa
 ## Installation sur Linux
 1. Téléchargez le JDK (Java Development Kit) depuis le site officiel d'Oracle ou utilisez un gestionnaire de paquets comme `apt` ou `yum`.
 2. Installez le JDK :
-   - Sur Debian/Ubuntu : `sudo apt update && sudo apt install openjdk-11-jdk`
-   - Sur Fedora/CentOS : `sudo yum install java-11-openjdk`
-3. Vérifiez l'installation : `java -version`
-4. Configurez les variables d'environnement si nécessaire (par exemple, `JAVA_HOME`).
+Installation `sudo apt update && sudo apt install default-jdk`
+4. Vérifiez l'installation : `java -version`
+5. Configurez les variables d'environnement si nécessaire (par exemple, `JAVA_HOME`). Trouver le chemin d'installation `readlink -f $(which java)`
+Modifier le fichier de configuration (par exemple, ~/.bashrc ou ~/.profile) pour ajouter :
+```shell
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$PATH:$JAVA_HOME/bin
+source ~/.bashrc
+```
 
 ## Installation sur MacOS
 1. Téléchargez le JDK depuis le site officiel d'Oracle ou utilisez Homebrew.
