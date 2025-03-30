@@ -1,121 +1,92 @@
 ---
-title: Les bases de Java
+title: Introduction to Learn Java
 description: Java
 order: 1
 ---
-## Les variables
-Les variables sont des conteneurs permettant de stocker des données. En Java, chaque variable a un type qui détermine la nature des données qu'elle peut contenir.
+## Java
+Java est un langage de programmation orienté objet, robuste et portable. Il est utilisé pour développer des applications allant des logiciels d'entreprise aux applications mobiles et aux systèmes embarqués. Java est connu pour sa philosophie "écrire une fois, exécuter partout" (Write Once, Run Anywhere), grâce à la machine virtuelle Java (JVM).
 
-Exemple :
-```java
-int age = 25; // Variable entière
-String nom = "Alice"; // Variable de type chaîne de caractères
+## Comment fonctionne Java
+Java fonctionne en compilant le code source en bytecode, qui est ensuite exécuté par la JVM. Voici les étapes principales :
+1. **Écriture du code source** : Le développeur écrit le code dans un fichier avec l'extension `.java`.
+2. **Compilation** : Le compilateur Java (`javac`) transforme le code source en bytecode, stocké dans un fichier `.class`.
+3. **Exécution** : La JVM interprète le bytecode et l'exécute sur la machine hôte. Cela permet à Java d'être indépendant de la plateforme.
+
+La JVM inclut également un ramasse-miettes (garbage collector) qui gère automatiquement la mémoire, réduisant ainsi les risques de fuites de mémoire.
+
+## Installation sur Linux
+1. Téléchargez le JDK (Java Development Kit) depuis le site officiel d'Oracle ou utilisez un gestionnaire de paquets comme `apt` ou `yum`.
+2. Installez le JDK :
+Installation `sudo apt update && sudo apt install default-jdk`
+4. Vérifiez l'installation : `java -version`
+5. Configurez les variables d'environnement si nécessaire (par exemple, `JAVA_HOME`).
+
+```shell
+#Trouver le chemin d'installation 
+readlink -f $(which java)
+
+# Modifier le fichier de configuration (par exemple, ~/.bashrc ou ~/.profile) pour ajouter :
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$PATH:$JAVA_HOME/bin
+
+# reload le source
+source ~/.bashrc
 ```
 
-## Les types
-Java est un langage fortement typé.
+## Installation sur MacOS
+1. Téléchargez le JDK depuis le site officiel d'Oracle ou utilisez Homebrew.
+2. Installez le JDK avec Homebrew : `brew install openjdk@11`
+3. Configurez le chemin d'accès :
+   - Ajoutez `export PATH="/usr/local/opt/openjdk@11/bin:$PATH"` à votre fichier `.zshrc` ou `.bash_profile`.
+4. Vérifiez l'installation : `java -version`
 
-- **Entier (`int`)**
-  - **Plage :** -2 147 483 648 à 2 147 483 647
-  - **Description :** Un entier signé 32 bits utilisé pour les nombres entiers.
+## Installation sur Windows
+1. Téléchargez le JDK depuis le site officiel d'Oracle.
+2. Exécutez l'installateur et suivez les instructions.
+3. Configurez les variables d'environnement :
+   - Ajoutez le chemin du dossier `bin` du JDK à la variable `PATH`.
+   - Créez une variable `JAVA_HOME` pointant vers le dossier d'installation du JDK.
+4. Vérifiez l'installation : Ouvrez une invite de commande et tapez `java -version`.
 
-- **Long (`long`)**
-  - **Plage :** -9 223 372 036 854 775 808 à 9 223 372 036 854 775 807
-  - **Description :** Un entier signé 64 bits pour les nombres entiers plus grands.
+## Démarrer une application Console
+Pour démarrer une application console en Java, suivez ces étapes :
 
-- **Flottant (`float`)**
-  - **Plage :** Environ ±3,40282347E+38F (7 chiffres décimaux)
-  - **Description :** Un nombre à virgule flottante 32 bits pour les valeurs décimales.
+1. **Créer un fichier source** : Écrivez le code Java dans un fichier avec l'extension `.java`. Par exemple :
+   ```java
+   public class Main {
+       public static void main(String[] args) {
+           System.out.println("Hello, World!");
+       }
+   }
+   ```
 
-- **Double (`double`)**
-  - **Plage :** Environ ±1,79769313486231570E+308 (15 chiffres décimaux)
-  - **Description :** Un nombre à virgule flottante 64 bits pour des valeurs décimales précises.
+2. **Compiler le fichier** : Utilisez la commande `javac` pour compiler le fichier source en bytecode :
+   ```bash
+   javac Main.java
+   ```
 
-- **Caractère (`char`)**
-  - **Plage :** 0 à 65 535 (non signé)
-  - **Description :** Un caractère Unicode 16 bits.
+   Cela génère un fichier `Main.class`.
 
-- **Booléen (`boolean`)**
-  - **Plage :** `true` ou `false`
-  - **Description :** Représente l'une des deux valeurs, généralement utilisé pour les opérations logiques.
+3. **Exécuter le programme** : Utilisez la commande `java` pour exécuter le bytecode :
+   ```bash
+   java Main
+   ```
 
-- **Octet (`byte`)**
-  - **Plage :** -128 à 127
-  - **Description :** Un entier signé 8 bits, utile pour économiser de la mémoire dans de grands tableaux.
+   Résultat attendu :
+   ```
+   Bonjour, monde !
+   ```
 
-- **Court (`short`)**
-  - **Plage :** -32 768 à 32 767
-  - **Description :** Un entier signé 16 bits, utilisé pour économiser de la mémoire dans de grands tableaux.
+4. **Ajouter des interactions** : Vous pouvez lire les entrées utilisateur avec `Scanner` pour rendre l'application interactive :
+   ```java
+   import java.util.Scanner;
 
-- **Chaîne (`String`)**
-  - **Plage :** N/A
-  - **Description :** Une séquence de caractères, utilisée pour le texte.
-
-
-Exemple :
-```java
-double pi = 3.14;
-boolean estActif = true;
-```
-
-## Les conversions de types
-Les conversions de types permettent de transformer une donnée d'un type à un autre. Il existe deux types de conversions :
-- **Conversion implicite** : réalisée automatiquement par Java.
-- **Conversion explicite (casting)** : réalisée manuellement.
-
-Exemple :
-```java
-int nombre = 10;
-double resultat = nombre; // Conversion implicite
-
-double valeur = 9.7;
-int valeurEntiere = (int) valeur; // Conversion explicite
-```
-
-## Les opérateurs
-Les opérateurs permettent d'effectuer des opérations sur des variables et des valeurs. Voici quelques exemples :
-- **Opérateurs arithmétiques** : `+`, `-`, `*`, `/`, `%`
-- **Opérateurs de comparaison** : `==`, `!=`, `<`, `>`, `<=`, `>=`
-- **Opérateurs logiques** : `&&`, `||`, `!`
-
-Exemple :
-```java
-int a = 5, b = 3;
-int somme = a + b; // 8
-boolean estEgal = (a == b); // false
-```
-
-## Mutabilité et immuabilité
-En Java, certains objets sont immuables, ce qui signifie que leur état ne peut pas être modifié après leur création. Par exemple, les objets de type `String` sont immuables.
-
-Exemple :
-```java
-String texte = "Bonjour";
-texte = texte + " tout le monde"; // Une nouvelle chaîne est créée
-```
-
-Les objets mutables, comme les instances de `StringBuilder`, peuvent être modifiés.
-
-Exemple :
-```java
-StringBuilder sb = new StringBuilder("Bonjour");
-sb.append(" tout le monde"); // Modifie l'objet existant
-```
-
-## Le débugger
-Le débugger est un outil essentiel pour analyser et corriger les erreurs dans un programme. Il permet d'exécuter le code pas à pas, d'inspecter les variables et de comprendre le flux d'exécution.
-
-Exemple d'utilisation :
-1. Placez un point d'arrêt (breakpoint) dans votre code.
-2. Lancez le programme en mode débogage.
-3. Analysez les valeurs des variables à chaque étape.
-
-## Arithmétie en Java
-L'arithmétique en Java repose sur les opérateurs arithmétiques. Attention aux priorités des opérateurs et aux erreurs comme la division par zéro.
-
-Exemple :
-```java
-int x = 10, y = 3;
-int division = x / y; // Résultat : 3 (division entière)
-double divisionReelle = (double) x / y; // Résultat : 3.333...
-```
+   public class Main {
+       public static void main(String[] args) {
+           Scanner scanner = new Scanner(System.in);
+           System.out.print("Entrez votre nom : ");
+           String nom = scanner.nextLine();
+           System.out.println("Bonjour, " + nom + " !");
+       }
+   }
+   ```

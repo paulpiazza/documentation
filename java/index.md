@@ -1,92 +1,51 @@
 ---
-title: Introduction to Learn Java
+title: Learn Java
 description: Java
 order: 0
 ---
-## Java
-Java est un langage de programmation orienté objet, robuste et portable. Il est utilisé pour développer des applications allant des logiciels d'entreprise aux applications mobiles et aux systèmes embarqués. Java est connu pour sa philosophie "écrire une fois, exécuter partout" (Write Once, Run Anywhere), grâce à la machine virtuelle Java (JVM).
 
-## Comment fonctionne Java
-Java fonctionne en compilant le code source en bytecode, qui est ensuite exécuté par la JVM. Voici les étapes principales :
-1. **Écriture du code source** : Le développeur écrit le code dans un fichier avec l'extension `.java`.
-2. **Compilation** : Le compilateur Java (`javac`) transforme le code source en bytecode, stocké dans un fichier `.class`.
-3. **Exécution** : La JVM interprète le bytecode et l'exécute sur la machine hôte. Cela permet à Java d'être indépendant de la plateforme.
+## Ressources
 
-La JVM inclut également un ramasse-miettes (garbage collector) qui gère automatiquement la mémoire, réduisant ainsi les risques de fuites de mémoire.
+- [The official Documentation](http://docs.oracle.com/javase/)
+- [The official Java Tutorials](http://www.oracle.com/technetwork/java/index-jsp-135888.html)
+- [Our community resources thread](https://www.reddit.com/r/learnjava/comments/md1loc/community_resources/)
+    
+## Tutoriels
 
-## Installation sur Linux
-1. Téléchargez le JDK (Java Development Kit) depuis le site officiel d'Oracle ou utilisez un gestionnaire de paquets comme `apt` ou `yum`.
-2. Installez le JDK :
-Installation `sudo apt update && sudo apt install default-jdk`
-4. Vérifiez l'installation : `java -version`
-5. Configurez les variables d'environnement si nécessaire (par exemple, `JAVA_HOME`).
+- MOOC [Java Programming](http://java-programming.mooc.fi/) from the University of Helsinki
+- [Java for Complete Beginners](https://www.udemy.com/java-tutorial)
+- accompanying site [CaveOfProgramming](http://caveofprogramming.com/)
+- [Derek Banas' Java Playlist](https://www.youtube.com/playlist?list=PLE7E8B7F4856C9B19)
+- accompanying site [NewThinkTank](http://newthinktank.com/)        
+- Coursebook [Algorithms 4th Edition](http://algs4.cs.princeton.edu/home/)
+- [Hyperskill](https://hi.hyperskill.org/) is a fairly new resource from _Jetbrains_ (the maker of IntelliJ)
+    
 
-```shell
-#Trouver le chemin d'installation 
-readlink -f $(which java)
+## Certifications
 
-# Modifier le fichier de configuration (par exemple, ~/.bashrc ou ~/.profile) pour ajouter :
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
-export PATH=$PATH:$JAVA_HOME/bin
+### 1. **Oracle Certified Associate, Java SE Programmer (OCA)**
+   - **Description** : C'est une certification d'entrée qui couvre les bases de la programmation Java. Elle est souvent recommandée comme première étape avant l'OCP.
+   - **Niveau** : Débutant à intermédiaire.
 
-# reload le source
-source ~/.bashrc
-```
+### 2. **Oracle Certified Professional, Java SE Programmer (OCP)**
+   - **Description** : Cette certification est destinée aux développeurs Java expérimentés. Elle valide des compétences avancées en programmation Java.
+   - **Niveau** : Intermédiaire à avancé.
 
-## Installation sur MacOS
-1. Téléchargez le JDK depuis le site officiel d'Oracle ou utilisez Homebrew.
-2. Installez le JDK avec Homebrew : `brew install openjdk@11`
-3. Configurez le chemin d'accès :
-   - Ajoutez `export PATH="/usr/local/opt/openjdk@11/bin:$PATH"` à votre fichier `.zshrc` ou `.bash_profile`.
-4. Vérifiez l'installation : `java -version`
+### 3. **Spring Professional Certification**
+   - **Description** : Cette certification est axée sur le framework Spring, largement utilisé dans le développement d'applications Java.
+   - **Niveau** : Intermédiaire à avancé.
 
-## Installation sur Windows
-1. Téléchargez le JDK depuis le site officiel d'Oracle.
-2. Exécutez l'installateur et suivez les instructions.
-3. Configurez les variables d'environnement :
-   - Ajoutez le chemin du dossier `bin` du JDK à la variable `PATH`.
-   - Créez une variable `JAVA_HOME` pointant vers le dossier d'installation du JDK.
-4. Vérifiez l'installation : Ouvrez une invite de commande et tapez `java -version`.
+### 4. **Java EE 7 Application Developer Certification**
+   - **Description** : Cette certification se concentre sur le développement d'applications d'entreprise avec Java EE.
+   - **Niveau** : Intermédiaire à avancé.
 
-## Démarrer une application Console
-Pour démarrer une application console en Java, suivez ces étapes :
+### 5. **Certified Java Developer (CJD)**
+   - **Description** : Proposée par certaines organisations, elle valide des compétences en développement Java, mais peut varier en termes de contenu et de reconnaissance.
 
-1. **Créer un fichier source** : Écrivez le code Java dans un fichier avec l'extension `.java`. Par exemple :
-   ```java
-   public class Main {
-       public static void main(String[] args) {
-           System.out.println("Hello, World!");
-       }
-   }
-   ```
+### 6. **AWS Certified Developer - Associate**
+   - **Description** : Bien que ce ne soit pas spécifique à Java, cette certification est utile si vous travaillez avec des applications Java sur AWS.
+   - **Niveau** : Intermédiaire.
 
-2. **Compiler le fichier** : Utilisez la commande `javac` pour compiler le fichier source en bytecode :
-   ```bash
-   javac Main.java
-   ```
-
-   Cela génère un fichier `Main.class`.
-
-3. **Exécuter le programme** : Utilisez la commande `java` pour exécuter le bytecode :
-   ```bash
-   java Main
-   ```
-
-   Résultat attendu :
-   ```
-   Bonjour, monde !
-   ```
-
-4. **Ajouter des interactions** : Vous pouvez lire les entrées utilisateur avec `Scanner` pour rendre l'application interactive :
-   ```java
-   import java.util.Scanner;
-
-   public class Main {
-       public static void main(String[] args) {
-           Scanner scanner = new Scanner(System.in);
-           System.out.print("Entrez votre nom : ");
-           String nom = scanner.nextLine();
-           System.out.println("Bonjour, " + nom + " !");
-       }
-   }
-   ```
+### 7. **Google Cloud Professional Cloud Developer**
+   - **Description** : Cette certification valide des compétences en développement sur Google Cloud, y compris des applications Java.
+   - **Niveau** : Intermédiaire à avancé.
