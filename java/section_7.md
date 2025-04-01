@@ -297,6 +297,7 @@ Les classes abstraites sont des classes qui ne peuvent pas être instanciées di
 
 ```java
 abstract class Shape {
+    // méthode abstraite
     abstract double area();
 }
 
