@@ -76,6 +76,52 @@ int result = calc.add(5, 3); // Résultat: 8
 System.out.println(calc.toString());
 ```
 
+Les méthodes ont une visibilité : private, protected, public. Par défaut, les méthodes sont publiques.
+
+```java
+class Utility {
+    // Méthode statique
+    public static int square(int number) {
+        return number * number;
+    }
+}
+
+int result = Utility.square(5); // Résultat: 25
+System.out.println("Square of 5 is: " + result);
+```
+
+```java
+class Example {
+    public void publicMethod() {
+        System.out.println("This is a public method.");
+    }
+
+    private void privateMethod() {
+        System.out.println("This is a private method.");
+    }
+
+    protected void protectedMethod() {
+        System.out.println("This is a protected method.");
+    }
+
+    void defaultMethod() {
+        System.out.println("This is a default (package-private) method.");
+    }
+
+    // Méthode statique
+    public static void staticMethod() {
+        System.out.println("This is a static method.");
+    }
+}
+
+Example.staticMethod(); // Appel direct sans créer d'instance
+Example example = new Example();
+example.publicMethod();
+// example.privateMethod(); // Erreur : inaccessible en dehors de la classe
+example.protectedMethod();
+example.defaultMethod();
+```
+
 ## Les accesseurs
 Les accesseurs (getters et setters) permettent de lire ou de modifier les attributs d'un objet tout en respectant l'encapsulation.
 
@@ -99,6 +145,7 @@ System.out.println(student.getName());
 
 ## L'héritage
 L'héritage permet à une classe (classe fille) de réutiliser les propriétés et méthodes d'une autre classe (classe parent).
+Il faudra alors utiliser le marqueur `@Override` pour signifier d'écraser la méthode de la classe mère.
 
 ```java
 class Animal {
@@ -123,8 +170,59 @@ dog.eat();
 dog.bark();
 ```
 
+### Limite de l'héritage
+En Java, une classe ne peut hériter que d'une seule classe parent. Cela signifie que Java ne supporte pas l'héritage multiple pour éviter les problèmes comme le "diamond problem". Cependant, une classe peut implémenter plusieurs interfaces, ce qui permet de contourner cette limitation.
+
+```java
+// Exemple d'héritage simple
+class Parent {
+    void display() {
+        System.out.println("This is the parent class.");
+    }
+}
+
+class Child extends Parent {
+    @Override
+    void display() {
+        System.out.println("This is the child class.");
+    }
+}
+
+// Exemple d'implémentation multiple d'interfaces
+interface InterfaceA {
+    void methodA();
+}
+
+interface InterfaceB {
+    void methodB();
+}
+
+class MultiInterfaceClass implements InterfaceA, InterfaceB {
+    @Override
+    public void methodA() {
+        System.out.println("Method A from InterfaceA");
+    }
+
+    @Override
+    public void methodB() {
+        System.out.println("Method B from InterfaceB");
+    }
+}
+
+Child child = new Child();
+child.display();
+
+MultiInterfaceClass obj = new MultiInterfaceClass();
+obj.methodA();
+obj.methodB();
+```
+
+Dans cet exemple, la classe `Child` hérite d'une seule classe parent (`Parent`), tandis que la classe `MultiInterfaceClass` implémente deux interfaces (`InterfaceA` et `InterfaceB`), démontrant ainsi la flexibilité des interfaces en Java.
+
 ## Les méthode de comparaison d'objets et d'affichage
-Les méthodes comme `equals()` et `toString()` permettent de comparer des objets ou de fournir une représentation textuelle de ceux-ci.
+Les méthodes comme `equals()`, `toString()` et `hashCode()` permettent de comparer des objets, de fournir une représentation textuelle ou de générer un code de hachage pour les objets.
+
+La méthode `hashCode()` retourne un entier qui représente le code de hachage d'un objet. Elle est souvent utilisée en conjonction avec `equals()` pour garantir que deux objets égaux ont le même code de hachage. Cela est particulièrement important pour les structures de données comme les `HashMap` ou `HashSet`.
 
 ```java
 class Point {
@@ -144,6 +242,11 @@ class Point {
     }
 
     @Override
+    public int hashCode() {
+        return 31 * x + y; // Exemple simple de calcul de hashCode
+    }
+
+    @Override
     public String toString() {
         return "Point(" + x + ", " + y + ")";
     }
@@ -152,8 +255,11 @@ class Point {
 Point p1 = new Point(1, 2);
 Point p2 = new Point(1, 2);
 System.out.println(p1.equals(p2)); // true
+System.out.println(p1.hashCode() == p2.hashCode()); // true
 System.out.println(p1); // Point(1, 2)
 ```
+
+Dans cet exemple, la méthode `hashCode()` utilise une formule simple pour calculer un code de hachage basé sur les attributs `x` et `y`. Cela garantit que deux objets `Point` égaux (selon `equals()`) auront le même code de hachage.
 
 ## Les records
 Les records sont des classes immuables introduites dans Java 14 pour représenter des données de manière concise.
