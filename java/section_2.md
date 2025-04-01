@@ -1,5 +1,5 @@
 ---
-title: Les bases de Java
+title: Les Variables
 description: Java
 order: 2
 ---
