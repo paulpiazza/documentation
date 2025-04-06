@@ -21,6 +21,63 @@ System.out.println(nombres[0]); // Affiche 10
 - **Accéder à un élément** : `nombres[index]`
 - **Modifier un élément** : `nombres[index] = valeur`
 
+## Création de listes et tableaux
+
+Java propose plusieurs méthodes pour créer des listes et des tableaux. Voici un aperçu des principales options et leurs différences.
+
+### `Arrays.asList`
+
+Cette méthode permet de créer une liste mutable basée sur un tableau fixe. Cependant, la taille de la liste ne peut pas être modifiée (pas d'ajout ou de suppression d'éléments).
+
+```java
+List<String> mutable = Arrays.asList("Rouge", "Vert", "Bleu");
+System.out.println(mutable.get(1)); // Affiche "Vert"
+// couleurs.add("Jaune"); // Provoque une UnsupportedOperationException
+```
+
+### `List.of`
+
+Introduite avec Java 9, cette méthode permet de créer une liste immuable. Toute tentative de modification de la liste (ajout, suppression, modification) provoque une exception.
+
+```java
+List<String> immuable = List.of("Alice", "Bob", "Charlie");
+System.out.println(immuable.get(1)); // Affiche "Bob"
+// immuable.add("David"); // Provoque une UnsupportedOperationException
+```
+
+### `new ArrayList<>()`
+
+Cette méthode crée une liste mutable et dynamique. Vous pouvez ajouter, supprimer ou modifier des éléments librement.
+
+```java
+List<String> noms = new ArrayList<>();
+noms.add("Alice");
+noms.add("Bob");
+System.out.println(noms.get(0)); // Affiche "Alice"
+noms.add("Charlie"); // Ajout possible
+```
+### Tableaux avec `new`
+
+Pour créer un tableau fixe, vous pouvez utiliser la syntaxe `new`. Les tableaux sont immuables en taille, mais leurs éléments peuvent être modifiés.
+
+```java
+int[] nombres = new int[3];
+nombres[0] = 10;
+nombres[1] = 20;
+System.out.println(nombres[0]); // Affiche 10
+```
+
+### Différences principales
+
+| Méthode                     | Mutable | Taille modifiable | Immuable |
+|-----------------------------|---------|-------------------|----------|
+| `Arrays.asList`             | Oui     | Non               | Non      |
+| `List.of`                   | Non     | Non               | Oui      |
+| `new ArrayList<>()`         | Oui     | Oui               | Non      |
+| Tableaux (`new`)            | Oui     | Non               | Non      |
+
+Cette section vous aide à choisir la méthode adaptée à vos besoins en fonction des contraintes de mutabilité et de taille.
+
 ## Les interfaces des collections
 
 Java fournit plusieurs interfaces pour manipuler des collections de données dynamiques, comme `List`, `Set`, et `Map`. Ces interfaces définissent des méthodes communes pour ajouter, supprimer, ou manipuler des éléments.

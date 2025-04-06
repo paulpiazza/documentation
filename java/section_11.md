@@ -70,7 +70,7 @@ public class ExempleExceptionPersonnalisee {
 }
 ```
 
-## Exception Try with resources
+## Exception `try-with-resources`
 
 Le bloc `try-with-resources` est utilisé pour gérer automatiquement la fermeture des ressources (comme les fichiers ou les connexions réseau) qui implémentent l'interface `AutoCloseable`.
 

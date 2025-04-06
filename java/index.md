@@ -22,29 +22,29 @@ order: 0
     
 ## Certifications
 
-### Oracle Certified Associate, Java SE Programmer (OCA)
-   - **Description** : C'est une certification d'entrée qui couvre les bases de la programmation Java. Elle est souvent recommandée comme première étape avant l'OCP.
-   - **Niveau** : Débutant à intermédiaire.
+- **Oracle Certified Associate, Java SE Programmer (OCA)**  
+  - Description : C'est une certification d'entrée qui couvre les bases de la programmation Java. Elle est souvent recommandée comme première étape avant l'OCP.  
+  - Niveau : Débutant à intermédiaire.
 
-### Oracle Certified Professional, Java SE Programmer (OCP)
-   - **Description** : Cette certification est destinée aux développeurs Java expérimentés. Elle valide des compétences avancées en programmation Java.
-   - **Niveau** : Intermédiaire à avancé.
+- **Oracle Certified Professional, Java SE Programmer (OCP)**  
+  - Description : Cette certification est destinée aux développeurs Java expérimentés. Elle valide des compétences avancées en programmation Java.  
+  - Niveau : Intermédiaire à avancé.
 
-### Spring Professional Certification
-   - **Description** : Cette certification est axée sur le framework Spring, largement utilisé dans le développement d'applications Java.
-   - **Niveau** : Intermédiaire à avancé.
+- **Spring Professional Certification**  
+  - Description : Cette certification est axée sur le framework Spring, largement utilisé dans le développement d'applications Java.  
+  - Niveau : Intermédiaire à avancé.
 
-### Java EE 7 Application Developer Certification
-   - **Description** : Cette certification se concentre sur le développement d'applications d'entreprise avec Java EE.
-   - **Niveau** : Intermédiaire à avancé.
+- **Java EE 7 Application Developer Certification**  
+  - Description : Cette certification se concentre sur le développement d'applications d'entreprise avec Java EE.  
+  - Niveau : Intermédiaire à avancé.
 
-### Certified Java Developer (CJD)
-   - **Description** : Proposée par certaines organisations, elle valide des compétences en développement Java, mais peut varier en termes de contenu et de reconnaissance.
+- **Certified Java Developer (CJD)**  
+  - Description : Proposée par certaines organisations, elle valide des compétences en développement Java, mais peut varier en termes de contenu et de reconnaissance.  
 
-### AWS Certified Developer - Associate
-   - **Description** : Bien que ce ne soit pas spécifique à Java, cette certification est utile si vous travaillez avec des applications Java sur AWS.
-   - **Niveau** : Intermédiaire.
+- **AWS Certified Developer - Associate**  
+  - Description : Bien que ce ne soit pas spécifique à Java, cette certification est utile si vous travaillez avec des applications Java sur AWS.  
+  - Niveau : Intermédiaire.
 
-### Google Cloud Professional Cloud Developer
-   - **Description** : Cette certification valide des compétences en développement sur Google Cloud, y compris des applications Java.
-   - **Niveau** : Intermédiaire à avancé.
+- **Google Cloud Professional Cloud Developer**  
+  - Description : Cette certification valide des compétences en développement sur Google Cloud, y compris des applications Java.  
+  - Niveau : Intermédiaire à avancé.
