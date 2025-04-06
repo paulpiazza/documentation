@@ -83,11 +83,32 @@ double pi = 3.14;
 boolean estActif = true;
 ```
 
+## Null en Java
+En Java, `null` est une valeur spéciale utilisée pour indiquer qu'une variable de type référence ne pointe vers aucun objet. Elle est souvent utilisée pour initialiser des variables ou pour signaler l'absence d'une valeur.
+
+```java
+String texte = null; // La variable ne pointe vers aucun objet
+if (texte == null) {
+    System.out.println("La variable est null");
+}
+```
+
+- **NullPointerException (NPE)** : Accéder à une méthode ou un champ d'une variable `null` provoque une exception `NullPointerException`.
+- **Vérification de null** : Toujours vérifier si une variable est `null` avant de l'utiliser.
+
+**Bonnes pratiques**
+- Utilisez des valeurs par défaut ou des objets optionnels (`Optional`) pour éviter les `null`.
+- Préférez l'initialisation immédiate des variables pour réduire les risques d'erreurs.
+
+```java
+Optional<String> texte = Optional.ofNullable(null);
+texte.ifPresent(System.out::println); // Ne fait rien si la valeur est null
+```
+
 ## Les conversions de types
 Les conversions de types permettent de transformer une donnée d'un type à un autre. Il existe deux types de conversions :
 - **Conversion implicite** : réalisée automatiquement par Java.
 - **Conversion explicite (casting)** : réalisée manuellement.
-
 
 ```java
 int nombre = 10;
