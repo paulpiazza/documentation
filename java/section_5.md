@@ -11,7 +11,7 @@ Les fonctions en Java sont des blocs de code réutilisables qui exécutent une t
 - un nom, et éventuellement
 - des paramètres.
 
-Exemple :
+
 ```java
 public int addition(int a, int b) {
     return a + b;
@@ -22,7 +22,7 @@ public int addition(int a, int b) {
 
 Les paramètres sont les variables définies dans la déclaration de la fonction, tandis que les arguments sont les valeurs passées à la fonction lors de son appel.
 
-Exemple :
+
 ```java
 public void afficherMessage(String message) {
     System.out.println(message);
@@ -36,7 +36,7 @@ afficherMessage("Bonjour, Java !");
 
 En Java, les types primitifs (int, double, etc.) sont passés par valeur, ce qui signifie que la fonction reçoit une copie de la valeur. Les objets, en revanche, sont passés par référence, mais Java utilise une "copie de la référence", ce qui signifie que les modifications sur l'objet affectent l'original.
 
-Exemple :
+
 ```java
 public void modifierValeur(int x) {
     x = 10; // Ne modifie pas la variable originale
@@ -51,7 +51,7 @@ public void modifierObjet(StringBuilder sb) {
 
 Il est important de documenter les fonctions pour expliquer leur rôle, leurs paramètres et leur valeur de retour. En Java, cela se fait généralement avec des commentaires Javadoc.
 
-Exemple :
+
 ```java
 /**
  * Additionne deux nombres entiers.

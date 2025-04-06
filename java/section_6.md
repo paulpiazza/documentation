@@ -8,7 +8,7 @@ order: 6
 
 Les tableaux en Java sont des structures de données fixes qui permettent de stocker plusieurs éléments du même type. Ils sont déclarés avec une taille fixe et ne peuvent pas être redimensionnés.
 
-### Exemple :
+### 
 ```java
 int[] nombres = new int[5];
 nombres[0] = 10;
@@ -39,7 +39,7 @@ Une liste est une collection ordonnée qui permet les doublons. Les éléments s
 - `ArrayList` : Liste basée sur un tableau dynamique, rapide pour l'accès par index.
 - `LinkedList` : Liste chaînée, efficace pour les insertions et suppressions fréquentes.
 
-### Exemple :
+### 
 ```java
 List<String> noms = new ArrayList<>();
 noms.add("Alice");
@@ -71,7 +71,7 @@ Un ensemble est une collection non ordonnée qui ne permet pas les doublons.
 - `TreeSet` : Basé sur un arbre binaire, maintient les éléments triés.
 - `LinkedHashSet` : Maintient l'ordre d'insertion.
 
-### Exemple :
+### 
 ```java
 Set<String> fruits = new HashSet<>();
 fruits.add("Pomme");
@@ -94,7 +94,7 @@ Une `Map` est une collection qui associe des clés à des valeurs. Les clés doi
 - `TreeMap` : Basé sur un arbre binaire, maintient les clés triées.
 - `LinkedHashMap` : Maintient l'ordre d'insertion.
 
-### Exemple :
+### 
 ```java
 Map<String, Integer> ages = new HashMap<>();
 ages.put("Alice", 25);
@@ -112,7 +112,7 @@ System.out.println(ages.get("Alice")); // Affiche 25
 
 La méthode `hashCode` est utilisée pour générer un code de hachage pour un objet. Elle est souvent utilisée dans les collections comme `HashSet` ou `HashMap`.
 
-### Exemple :
+### 
 ```java
 class Personne {
     private String nom;

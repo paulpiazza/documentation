@@ -10,9 +10,9 @@ Java offre plusieurs classes pour travailler avec les dates et les heures. Depui
 
 ## Classes principales
 
-- **`LocalDate`** : Représente une date sans heure (exemple : 2023-10-01).
-- **`LocalTime`** : Représente une heure sans date (exemple : 14:30:00).
-- **`LocalDateTime`** : Combine une date et une heure (exemple : 2023-10-01T14:30:00).
+- **`LocalDate`** : Représente une date sans heure ( 2023-10-01).
+- **`LocalTime`** : Représente une heure sans date ( 14:30:00).
+- **`LocalDateTime`** : Combine une date et une heure ( 2023-10-01T14:30:00).
 - **`ZonedDateTime`** : Inclut une date, une heure et un fuseau horaire.
 - **`Instant`** : Représente un point précis dans le temps (utilisé souvent pour les horodatages).
 

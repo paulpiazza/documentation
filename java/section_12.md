@@ -8,7 +8,6 @@ order: 12
 
 La programmation fonctionnelle est un paradigme de programmation qui traite les calculs comme l'évaluation de fonctions mathématiques. Elle favorise l'utilisation de fonctions pures, l'immutabilité et l'absence d'effets de bord. Voir la liste des méthodes de l'API [Documentation JAVA - Method Summary](https://docs.oracle.com/en/java/javase/21/docs/api//java.base/java/util/stream/Stream.html#method-summary)
 
-Exemple :
 ```java
 Function<Integer, Integer> carre = x -> x * x;
 System.out.println(carre.apply(5)); // Affiche 25
@@ -18,7 +17,6 @@ System.out.println(carre.apply(5)); // Affiche 25
 
 Une interface fonctionnelle est une interface qui ne contient qu'une seule méthode abstraite. Elle peut être utilisée comme cible pour une expression lambda ou une référence de méthode.
 
-Exemple :
 ```java
 @FunctionalInterface
 interface Calcul {
@@ -37,7 +35,6 @@ public class ExempleInterfaceFonctionnelle {
 
 Les expressions lambdas permettent de définir des fonctions anonymes de manière concise. Elles sont souvent utilisées pour implémenter des interfaces fonctionnelles.
 
-Exemple :
 ```java
 Runnable runnable = () -> System.out.println("Exécution d'un thread");
 new Thread(runnable).start();
@@ -47,7 +44,6 @@ new Thread(runnable).start();
 
 L'API Stream permet de traiter des collections de données de manière fonctionnelle. Elle offre des méthodes pour filtrer, transformer et collecter des données.
 
-Exemple :
 ```java
 List<String> noms = Arrays.asList("Alice", "Bob", "Charlie");
 noms.stream()
@@ -59,7 +55,6 @@ noms.stream()
 
 Les méthodes intermédiaires retournent un nouveau Stream et permettent de chaîner plusieurs opérations.
 
-Exemple :
 ```java
 List<Integer> nombres = Arrays.asList(1, 2, 3, 4, 5);
 nombres.stream()
@@ -72,7 +67,6 @@ nombres.stream()
 
 Les méthodes terminales déclenchent le traitement du Stream et retournent un résultat ou effectuent une action.
 
-Exemple :
 ```java
 List<Integer> nombres = Arrays.asList(1, 2, 3, 4, 5);
 int somme = nombres.stream()

@@ -7,7 +7,7 @@ order: 4
 ## String est-il un objet ?
 - Oui, en Java, `String` est une classe et donc un objet. Chaque chaîne de caractères que vous créez est une instance de la classe `String`.
 - Les objets `String` sont immuables, ce qui signifie que leur contenu ne peut pas être modifié après leur création.
-- Exemple :
+- 
   ```java
   String texte = "Bonjour"; // Création d'un objet String
   System.out.println(texte instanceof String); // true
@@ -18,7 +18,7 @@ order: 4
 
 ### Création d'une chaîne de caractères
 - Une chaîne de caractères en Java est une séquence immuable de caractères. Elle peut être créée en utilisant des guillemets doubles.
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour";
   String vide = ""; // Chaîne vide
@@ -26,7 +26,7 @@ order: 4
 
 ### Concaténation de chaînes
 - La concaténation permet de combiner plusieurs chaînes en une seule. Cela peut être fait avec l'opérateur `+` ou la méthode `concat`.
-- Exemple : 
+-  
   ```java
   String resultat = "Bonjour" + " " + "le monde";
   String resultat2 = "Bonjour".concat(" le monde");
@@ -34,7 +34,7 @@ order: 4
 
 ### Longueur d'une chaîne
 - La méthode `length` retourne le nombre de caractères dans une chaîne.
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour";
   int longueur = texte.length(); // longueur = 7
@@ -42,7 +42,7 @@ order: 4
 
 ### Accéder à un caractère
 - La méthode `charAt` permet d'accéder à un caractère spécifique dans une chaîne en utilisant son index (commençant à 0).
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour";
   char premierCaractere = texte.charAt(0); // 'B'
@@ -51,7 +51,7 @@ order: 4
 
 ### Comparaison de chaînes
 - Les chaînes peuvent être comparées avec `equals` (sensible à la casse) ou `equalsIgnoreCase` (insensible à la casse).
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour";
   boolean estEgal = texte.equals("Bonjour"); // true
@@ -60,7 +60,7 @@ order: 4
 
 ### Vérifier le début ou la fin
 - Les méthodes `startsWith` et `endsWith` permettent de vérifier si une chaîne commence ou se termine par une sous-chaîne donnée.
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour";
   boolean commencePar = texte.startsWith("Bon"); // true
@@ -69,7 +69,7 @@ order: 4
 
 ### Extraire une sous-chaîne
 - La méthode `substring` permet d'extraire une partie d'une chaîne en spécifiant les indices de début et de fin.
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour";
   String sousChaine = texte.substring(0, 4); // "Bonj"
@@ -78,7 +78,7 @@ order: 4
 
 ### Remplacer des caractères ou des sous-chaînes
 - La méthode `replace` remplace toutes les occurrences d'un caractère ou d'une sous-chaîne par une autre.
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour";
   String remplacé = texte.replace("Bonjour", "Salut"); // "Salut"
@@ -87,7 +87,7 @@ order: 4
 
 ### Diviser une chaîne
 - La méthode `split` divise une chaîne en un tableau de sous-chaînes en fonction d'un délimiteur.
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour le monde";
   String[] mots = texte.split(" "); // ["Bonjour", "le", "monde"]
@@ -95,7 +95,7 @@ order: 4
 
 ### Supprimer les espaces inutiles
 - La méthode `trim` supprime les espaces au début et à la fin d'une chaîne.
-- Exemple : 
+-  
   ```java
   String texte = "  Bonjour  ";
   String nettoyé = texte.trim(); // "Bonjour"
@@ -103,7 +103,7 @@ order: 4
 
 ### Conversion en majuscules ou minuscules
 - Les méthodes `toUpperCase` et `toLowerCase` convertissent une chaîne en majuscules ou minuscules.
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour";
   String majuscule = texte.toUpperCase(); // "BONJOUR"
@@ -112,7 +112,7 @@ order: 4
 
 ### Rechercher un caractère ou une sous-chaîne
 - Les méthodes `indexOf` et `lastIndexOf` permettent de trouver la position d'un caractère ou d'une sous-chaîne.
-- Exemple : 
+-  
   ```java
   String texte = "Bonjour";
   int position = texte.indexOf("o"); // 1
@@ -121,7 +121,7 @@ order: 4
 
 ### Vérifier si une chaîne est vide
 - Les méthodes `isEmpty` et `isBlank` permettent de vérifier si une chaîne est vide ou contient uniquement des espaces.
-- Exemple : 
+-  
   ```java
   String texte = "";
   boolean estVide = texte.isEmpty(); // true

@@ -8,7 +8,7 @@ order: 11
 
 Les exceptions en Java sont des événements qui interrompent le flux normal d'un programme. Elles sont utilisées pour gérer les erreurs de manière contrôlée.
 
-Exemple :
+
 ```java
 public class ExempleException {
     public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class ExempleException {
 
 Le bloc `try` permet d'exécuter du code susceptible de générer une exception. Le bloc `catch` capture et gère cette exception. Le bloc `finally` est optionnel et s'exécute toujours, qu'une exception soit levée ou non.
 
-Exemple :
+
 ```java
 public class ExempleTryCatchFinally {
     public static void main(String[] args) {
@@ -45,7 +45,7 @@ public class ExempleTryCatchFinally {
 
 Vous pouvez créer vos propres exceptions en étendant la classe `Exception` ou `RuntimeException`.
 
-Exemple :
+
 ```java
 class MonException extends Exception {
     public MonException(String message) {
@@ -74,7 +74,7 @@ public class ExempleExceptionPersonnalisee {
 
 Le bloc `try-with-resources` est utilisé pour gérer automatiquement la fermeture des ressources (comme les fichiers ou les connexions réseau) qui implémentent l'interface `AutoCloseable`.
 
-Exemple :
+
 ```java
 import java.io.BufferedReader;
 import java.io.FileReader;

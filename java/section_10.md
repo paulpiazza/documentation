@@ -56,7 +56,7 @@ public class ExempleConsole {
 
 Pour demander une réponse de type Oui/Non à l'utilisateur, vous pouvez utiliser la classe `Scanner` et lire une chaîne de caractères. Ensuite, comparez la réponse avec les valeurs attendues (`"oui"`, `"non"`, etc.).
 
-Voici un exemple :
+Voici un 
 
 ```java
 import java.util.Scanner;

@@ -6,7 +6,7 @@ order: 2
 ## Les variables
 Les variables sont des conteneurs permettant de stocker des données. En Java, chaque variable a un type qui détermine la nature des données qu'elle peut contenir.
 
-Exemple :
+
 ```java
 int age = 25; // Variable entière
 String nom = "Alice"; // Variable de type chaîne de caractères
@@ -77,7 +77,7 @@ Java est un langage fortement typé.
   - **Description :** Une séquence de caractères, utilisée pour le texte.
 
 
-Exemple :
+
 ```java
 double pi = 3.14;
 boolean estActif = true;
@@ -88,7 +88,7 @@ Les conversions de types permettent de transformer une donnée d'un type à un a
 - **Conversion implicite** : réalisée automatiquement par Java.
 - **Conversion explicite (casting)** : réalisée manuellement.
 
-Exemple :
+
 ```java
 int nombre = 10;
 double resultat = nombre; // Conversion implicite
@@ -103,7 +103,7 @@ Les opérateurs permettent d'effectuer des opérations sur des variables et des 
 - **Opérateurs de comparaison** : `==`, `!=`, `<`, `>`, `<=`, `>=`
 - **Opérateurs logiques** : `&&`, `||`, `!`
 
-Exemple :
+
 ```java
 int a = 5, b = 3;
 int somme = a + b; // 8
@@ -113,7 +113,7 @@ boolean estEgal = (a == b); // false
 ## Mutabilité et immuabilité
 En Java, certains objets sont immuables, ce qui signifie que leur état ne peut pas être modifié après leur création. Par exemple, les objets de type `String` sont immuables.
 
-Exemple :
+
 ```java
 String texte = "Bonjour";
 texte = texte + " tout le monde"; // Une nouvelle chaîne est créée
@@ -121,7 +121,7 @@ texte = texte + " tout le monde"; // Une nouvelle chaîne est créée
 
 Les objets mutables, comme les instances de `StringBuilder`, peuvent être modifiés.
 
-Exemple :
+
 ```java
 StringBuilder sb = new StringBuilder("Bonjour");
 sb.append(" tout le monde"); // Modifie l'objet existant
@@ -138,7 +138,7 @@ Exemple d'utilisation :
 ## Arithmétie en Java
 L'arithmétique en Java repose sur les opérateurs arithmétiques. Attention aux priorités des opérateurs et aux erreurs comme la division par zéro.
 
-Exemple :
+
 ```java
 int x = 10, y = 3;
 int division = x / y; // Résultat : 3 (division entière)

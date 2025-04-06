@@ -43,7 +43,7 @@ Si aucun groupe de sécurité n'est configuré, par défaut, ce sera celui du r�
      - **Port Range** : La plage de ports autorisée (par exemple, 22 pour SSH, 80 pour HTTP).
      - **Source** : L'adresse IP ou le groupe de sécurité autorisé à accéder (par exemple, `0.0.0.0/0` pour autoriser tout le monde ou une plage IP spécifique comme `192.168.1.0/24`).
 
-   Exemple :
+   
    - Autoriser l'accès SSH uniquement depuis une adresse IP spécifique :
      - Type : SSH
      - Protocole : TCP
@@ -59,7 +59,7 @@ Si aucun groupe de sécurité n'est configuré, par défaut, ce sera celui du r�
      - **Port Range** : La plage de ports autorisée.
      - **Destination** : L'adresse IP ou le groupe de sécurité vers lequel le trafic est autorisé.
 
-   Exemple :
+   
    - Autoriser uniquement le trafic HTTP sortant :
      - Type : HTTP
      - Protocole : TCP

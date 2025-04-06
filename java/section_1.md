@@ -51,7 +51,7 @@ source ~/.bashrc
 ## Démarrer une application Console
 Pour démarrer une application console en Java, suivez ces étapes :
 
-1. **Créer un fichier source** : Écrivez le code Java dans un fichier avec l'extension `.java`. Par exemple :
+1. **Créer un fichier source** : Écrivez le code Java dans un fichier avec l'extension `.java`. Par 
    ```java
    public class Main {
        public static void main(String[] args) {
