@@ -26,11 +26,13 @@ La configuration d'une instance EC2 implique plusieurs étapes :
 Le cycle de vie d'une instance EC2 comprend plusieurs états :
 - **Pending** : L'instance est en cours de lancement.
 - **Running** : L'instance est active et prête à être utilisée.
-- **Stopped** : L'instance est arrêtée mais peut être redémarrée.
+- **Stopped** : L'instance est arrêtée mais peut être redémarrée. (Nécéssite un EBS pour conserver les données)
 - **Terminated** : L'instance est supprimée et ne peut pas être récupérée.
 
 ## Groupes de sécurité EC2
 Les groupes de sécurité agissent comme des pare-feu virtuels pour contrôler le trafic entrant et sortant des instances EC2. Ils permettent de définir des règles basées sur les adresses IP, les protocoles et les ports.
+
+Si aucun groupe de sécurité n'est configuré, par défaut, ce sera celui du réseau auquel l'instance appartient.
 
 ### Paramétrage des règles des groupes de sécurité
 1. **Trafic entrant (Inbound Rules)** :
@@ -96,7 +98,11 @@ Pour se connecter à une instance EC2 :
 Les rôles IAM permettent aux instances EC2 d'accéder à d'autres services AWS sans nécessiter de clés d'accès. Assignez un rôle à une instance pour lui permettre, par exemple, de lire des fichiers dans un bucket S3.
 
 ## Les volumes EBS en détail
-Les volumes EBS (Elastic Block Store) sont des disques persistants attachés aux instances EC2. Ils offrent des options comme :
+Les volumes EBS (Elastic Block Store) sont des disques persistants attachés aux instances EC2.
+
+Ils conservent les données lorsque le serveur est arrêté.
+
+Ils offrent des options comme :
 - **IOPS provisionnés** : Pour des performances élevées, adaptés aux bases de données ou applications nécessitant un débit constant.
 - **Snapshots** : Pour sauvegarder les données et restaurer un volume à un état précédent.
 - **Volumes généraux (gp3/gp2)** : Idéal pour les charges de travail générales comme les serveurs web ou les environnements de développement.
@@ -140,7 +146,7 @@ Un modèle de tarification flexible permettant de réduire les coûts en échang
 ### Instance Réservée
 Une instance EC2 prépayée ou avec engagement à long terme, offrant des réductions significatives par rapport au tarif à la demande.
 
-### Hôtes dédiées
+### Hôtes dédiés
 Des serveurs physiques dédiés à un seul client, permettant un contrôle total sur le placement des instances.
 
 ### Réservation de capacité
@@ -170,7 +176,27 @@ Un référentiel contenant des certificats de confiance pour sécuriser les comm
 ### Auto Scaling
 Un service permettant d'ajuster automatiquement le nombre d'instances EC2 en fonction de la demande.
 
+### Adresses IPv4 publiques et privées
+- **Adresse IPv4 publique** : Une adresse IP accessible depuis Internet, attribuée dynamiquement ou statiquement à une instance EC2.
+- **Adresse IPv4 privée** : Une adresse IP utilisée pour la communication interne dans un VPC, non accessible depuis Internet.
 
+### Type de nom d'hôte
+Le format du nom d'hôte attribué à une instance EC2, qui peut inclure des informations sur la région ou la zone de disponibilité.
+
+### DNS IPv4 public
+Un nom DNS attribué à une instance EC2 pour permettre un accès public via Internet.
+
+### ARN de l’instance
+L'Amazon Resource Name (ARN) est un identifiant unique pour une instance EC2, utilisé pour les permissions et les politiques IAM.
+
+### ID de sous-réseau
+Un identifiant unique pour un sous-réseau dans un VPC, où une instance EC2 est lancée.
+
+### IMDSv2
+Instance Metadata Service version 2, une méthode sécurisée pour accéder aux métadonnées d'une instance EC2, comme les informations sur les rôles IAM ou les adresses IP.
+
+### Managed
+Indique sur le serveur est géré par un cluster Kubernetes.
 
 
 

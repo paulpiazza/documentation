@@ -12,6 +12,31 @@ int age = 25; // Variable entière
 String nom = "Alice"; // Variable de type chaîne de caractères
 ```
 
+## Déclaration avec `var`
+Depuis Java 10, il est possible d'utiliser le mot-clé `var` pour déclarer des variables locales. Cela permet de déduire automatiquement le type de la variable à partir de la valeur qui lui est assignée.
+- Simplifie la déclaration lorsque le type est évident ou redondant.
+- Améliore la lisibilité dans certains cas, notamment avec des types complexes.
+- Ne peut être utilisé que pour des variables locales (dans une méthode ou un bloc) et non pour les champs de classe.
+
+### Exemple
+```java
+var age = 25; // Le type est déduit comme int
+var nom = "Alice"; // Le type est déduit comme String
+var liste = List.of("A", "B", "C"); // Le type est déduit comme List<String>
+
+// Attention : le type doit être inféré immédiatement
+// var invalide; // Erreur : la variable doit être initialisée
+```
+
+### Limitations
+- Ne peut pas être utilisé pour les paramètres de méthode ou les champs de classe.
+- Peut réduire la lisibilité si le type n'est pas évident à partir du contexte.
+- Ne remplace pas les types explicites dans les cas où la clarté est essentielle.
+
+```java
+var resultat = calculComplexe(); // Peut être ambigu si le type de retour n'est pas clair
+```
+
 ## Les types
 Java est un langage fortement typé.
 

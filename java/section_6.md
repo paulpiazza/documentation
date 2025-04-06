@@ -46,6 +46,14 @@ noms.add("Alice");
 noms.add("Bob");
 noms.add("Alice"); // Les doublons sont autorisés
 System.out.println(noms.get(0)); // Affiche "Alice"
+
+// Exemple avec List.of (liste immuable)
+List<String> immuable = List.of("Alice", "Bob", "Charlie");
+System.out.println(immuable.get(1)); // Affiche "Bob"
+
+// Exemple de Arrays.asList (liste mutable)
+List<String> couleurs = Arrays.asList("Rouge", "Vert", "Bleu");
+System.out.println(couleurs.get(1)); // Affiche "Vert"
 ```
 
 ### Opérations possibles :
