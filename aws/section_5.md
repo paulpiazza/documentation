@@ -130,6 +130,126 @@ Menu EC2
 
 EC2 > Instances > Lancer une instance
 
+Sélectionner 
+* "Autoriser le trafic SSH" : permet de se connecter en ssh sur le port 22.
+* "Autoriser le trafic HTTP depuis l'Internet" : Cela permet aux utilisateurs d'accéder à une application ou un site web hébergé sur l'instance EC2 via un navigateur ou un client HTTP. Le port 80 est le port standard pour les connexions HTTP non sécurisées.
+* * "Autoriser le trafic HTTPS depuis l'Internet" : HTTP sécurisé sur le port 443.
+
+> ***Bonnes pratiques*** :
+> 
+> **Utilisez HTTPS** : Si possible, configurez également le port 443 pour les connexions HTTPS sécurisées.
+> **Restreignez l'accès** : Si vous n'avez pas besoin que tout le monde accède à votre instance, limitez la source à une plage IP spécifique.
+> **Surveillez le trafic** : Utilisez des outils comme AWS CloudWatch pour surveiller les connexions entrantes.
+
+Données utilisateurs : permet d'installer des éléments sur le server. Par exemple pour un server NodeJs.
+
+Il faut utiliser un volume (prendre le volume par défaut)
+
+Ouvrir le serveur grâce à son IPv4 publique.
+
+```shell
+#!/bin/bash
+yum update -y
+yum install -y nodejs
+mkdir /home/ec2-user/myapp
+cd /home/ec2-user/myapp
+npm init -y
+npm install express
+cat > index.js <<EOF
+const express = require('express');
+const app = express();
+app.get('/', (req, res) => {
+  res.send('Hello World from EC2!');
+});
+app.listen(80, () => {
+  console.log('Server running on port 80');
+});
+EOF
+node index.js
+```
+Pour se connecter à l'instance : (click droit sur l'instance) EC2 > Instances > i-0e923d0c105760b2e > Connectez-vous à l’instance
+
+Plusieurs méthodes sont possibles pour se connecter.
+
+## Error : Server refused to connect
+
+L'erreur **"refused to connect"** sur le port 80 indique que votre serveur n'est pas accessible depuis l'extérieur. Cela peut être dû à plusieurs raisons. Voici les étapes pour résoudre ce problème :
+
+
+### 1. **Vérifiez les groupes de sécurité AWS**
+Assurez-vous que votre groupe de sécurité EC2 autorise le trafic entrant sur le port 80 (HTTP). Voici comment vérifier et configurer cela :
+
+1. Allez dans la console AWS.
+2. Naviguez vers **EC2 > Sécurité > Groupes de sécurité**.
+3. Sélectionnez le groupe de sécurité associé à votre instance EC2.
+4. Ajoutez une règle dans les **Inbound Rules** :
+   - **Type** : HTTP
+   - **Protocole** : TCP
+   - **Port Range** : 80
+   - **Source** : `0.0.0.0/0` (pour autoriser tout le monde) ou une plage IP spécifique.
+
+
+### 2. **Vérifiez que le serveur écoute sur le port 80**
+Connectez-vous à votre instance EC2 via SSH et vérifiez que votre application Node.js est bien en cours d'exécution et écoute sur le port 80 :
+
+1. Connectez-vous à l'instance :
+   ```bash
+   ssh -i "votre-cle.pem" ec2-user@<adresse-ip>
+   ```
+
+2. Vérifiez les processus Node.js :
+   ```bash
+   ps aux | grep node
+   ```
+
+3. Vérifiez que le port 80 est en écoute :
+   ```bash
+   sudo netstat -tuln | grep 80
+   ```
+
+Si le port 80 n'est pas en écoute, assurez-vous que votre application Node.js est bien démarrée.
+
+
+### 3. **Vérifiez le pare-feu sur l'instance**
+Si vous utilisez un pare-feu comme `iptables` ou `firewalld`, assurez-vous qu'il autorise le trafic sur le port 80 :
+
+- Pour vérifier les règles `iptables` :
+  ```bash
+  sudo iptables -L
+  ```
+
+- Pour désactiver temporairement le pare-feu (à des fins de test) :
+  ```bash
+  sudo systemctl stop firewalld
+  ```
+
+
+### 4. **Vérifiez l'adresse IP utilisée**
+Assurez-vous d'utiliser l'**adresse IPv4 publique** de votre instance EC2 pour accéder à votre application. Vous pouvez trouver cette adresse dans la console AWS sous **EC2 > Instances > IPv4 publique**.
+
+Accédez à votre application via un navigateur ou `curl` :
+```bash
+curl http://<adresse-ip-publique>
+```
+
+
+### 5. **Redémarrez votre application**
+Si tout semble correct mais que le problème persiste, redémarrez votre application Node.js pour vous assurer qu'elle fonctionne correctement :
+
+```bash
+node /home/ec2-user/myapp/index.js
+```
+
+
+### 6. **Bonnes pratiques**
+- **Utilisez HTTPS** : Configurez un certificat SSL pour sécuriser votre application (port 443).
+- **Surveillez les logs** : Vérifiez les logs de votre application pour détecter d'éventuelles erreurs :
+  ```bash
+  tail -f /home/ec2-user/myapp/index.js
+  ```
+
+
+Si vous suivez ces étapes et que le problème persiste, partagez les résultats des commandes pour que je puisse vous aider davantage !
 
 
 ## Lexique
