@@ -271,7 +271,7 @@ Utilisation IAM
 
 Utiliser le CLI aws dans l'instance
 
-```shel
+```shell
 aws iam list=users
 ```
 
