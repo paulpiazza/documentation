@@ -8,7 +8,7 @@ order: 3
 
 Nginx est un serveur web performant, utilisé pour servir des sites statiques, des proxys, etc.
 
----
+
 
 ## Start, stop, reload de la configuration
 
@@ -19,19 +19,19 @@ sudo systemctl stop nginx
 sudo systemctl reload nginx
 ```
 
----
+
 
 ## Introduction aux directives et aux contextes
 
 Les directives sont des instructions dans la configuration. Les contextes définissent leur portée, comme `http`, `server`, et `location`.
 
----
+
 
 ## L'architecture de Nginx
 
 Nginx utilise une architecture événementielle, avec des processus maîtres et des processus travailleurs.
 
----
+
 
 ## La configuration de base de Nginx
 

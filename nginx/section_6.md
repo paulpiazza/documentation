@@ -83,7 +83,7 @@ location ~ \.php$ {
 }
 ```
 
-## Cas du Reverse proxxy API et SPA en Docker
+## Cas du Reverse proxy API et SPA en Docker
 
 Exemple avec Docker :
 ```nginx

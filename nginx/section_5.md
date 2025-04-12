@@ -21,7 +21,7 @@ Pour servir un site statique localement avec Docker, vous pouvez utiliser une im
    ```
 4. Accédez à votre site sur `http://localhost:8080`.
 
----
+
 
 ## Servir une SPA (Angular) localement avec Docker
 
@@ -54,7 +54,7 @@ Pour une SPA Angular, vous devez configurer Nginx pour rediriger toutes les requ
    docker run -d -p 8080:80 spa-angular
    ```
 
----
+
 
 ## Servir un site statique sur internet
 
@@ -80,8 +80,6 @@ Pour servir un site statique sur internet, vous pouvez utiliser un serveur Nginx
    ```bash
    sudo systemctl restart nginx
    ```
-
----
 
 ## Servir une SPA (Angular) sur Internet
 
