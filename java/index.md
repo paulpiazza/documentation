@@ -12,6 +12,7 @@ order: 0
     
 ## Tutoriels
 
+- [Présentation](https://www.youtube.com/watch?v=LKgH-am4Xac)
 - MOOC [Java Programming](http://java-programming.mooc.fi/) from the University of Helsinki
 - [Java for Complete Beginners](https://www.udemy.com/java-tutorial)
 - accompanying site [CaveOfProgramming](http://caveofprogramming.com/)

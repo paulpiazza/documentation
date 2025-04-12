@@ -347,3 +347,30 @@ enum Day {
 
 Day today = Day.MONDAY;
 System.out.println(today);
+```
+
+
+## Les constantes de classe
+En Java, une constante de classe est une variable dont la valeur ne peut pas être modifiée après son initialisation. Elle est déclarée avec les modificateurs `public`, `static` et `final`.
+
+- **`public`** : Rendre la constante accessible depuis d'autres classes.
+- **`static`** : Associer la constante à la classe plutôt qu'à une instance.
+- **`final`** : Empêcher toute modification de la valeur après son initialisation.
+
+```java
+public class Constantes {
+    public static final double PI = 3.14159;
+    public static final String NOM_APPLICATION = "MonApplication";
+}
+```
+
+Les constantes de classe sont accessibles directement via le nom de la classe, sans avoir besoin de créer une instance.
+
+```java
+System.out.println(Constantes.PI); // Affiche : 3.14159
+System.out.println(Constantes.NOM_APPLICATION); // Affiche : MonApplication
+```
+
+- Utilisez des noms en majuscules avec des underscores (`_`) pour les constantes, par convention.
+- Placez les constantes dans une classe dédiée si elles sont partagées entre plusieurs classes.
+- Évitez d'utiliser des constantes magiques (valeurs littérales) directement dans le code, préférez les constantes nommées.

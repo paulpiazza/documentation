@@ -110,6 +110,102 @@ Ils offrent des options comme :
 - **Volumes froids (sc1)** : Pour les données rarement consultées, offrant un coût réduit.
 - **Volumes magnétiques** : Une option plus ancienne et économique pour les données archivées.
 
+## Snapshots des volumes EBS
+Un snapshot est une sauvegarde incrémentale d'un volume EBS, stockée dans Amazon S3. Les snapshots permettent de capturer l'état d'un volume à un moment donné, ce qui est utile pour la sauvegarde, la restauration et la création d'AMI.
+
+### Utilité des snapshots
+- **Sauvegarde** : Protégez vos données en créant des copies de vos volumes EBS.
+- **Restauration** : Restaurez un volume à partir d'un snapshot en cas de perte de données ou de corruption.
+- **Migration** : Créez un snapshot pour copier un volume dans une autre région AWS.
+- **Création d'AMI** : Les AMI utilisent des snapshots pour inclure les volumes racine et supplémentaires.
+
+### Lien avec les AMI
+Lorsqu'une AMI est créée à partir d'une instance EC2, AWS génère automatiquement des snapshots pour les volumes EBS attachés à l'instance. Ces snapshots sont utilisés pour recréer les volumes lors du lancement d'une nouvelle instance à partir de l'AMI.
+
+### Politique de suppression
+- **Suppression d'un volume EBS** : Si un volume EBS est supprimé, ses snapshots ne sont pas automatiquement supprimés. Ils doivent être supprimés manuellement pour éviter des coûts inutiles.
+- **Suppression d'une AMI** : Lorsque vous supprimez une AMI, les snapshots associés ne sont pas supprimés par défaut. Vous devez les supprimer manuellement si vous n'en avez plus besoin.
+
+### Bonnes pratiques
+1. **Automatisation** : Utilisez AWS Backup ou des scripts pour automatiser la création et la gestion des snapshots.
+2. **Rétention** : Définissez une politique de rétention pour supprimer les anciens snapshots et réduire les coûts.
+3. **Chiffrement** : Activez le chiffrement pour protéger les données sensibles dans les snapshots.
+4. **Régions multiples** : Copiez les snapshots dans d'autres régions pour assurer une reprise après sinistre.
+
+### Exemple de création de snapshot
+Pour créer un snapshot d'un volume EBS via AWS CLI :
+```bash
+aws ec2 create-snapshot --volume-id vol-1234567890abcdef0 --description "Snapshot de sauvegarde"
+```
+
+### Exemple de restauration à partir d'un snapshot
+Pour restaurer un volume à partir d'un snapshot :
+```bash
+aws ec2 create-volume --snapshot-id snap-1234567890abcdef0 --availability-zone us-east-1a
+```
+
+## Monter un volume EBS automatiquement au redémarrage
+Pour qu'un volume EBS soit monté automatiquement après un redémarrage de l'instance EC2, vous devez mettre à jour le fichier `/etc/fstab`.
+
+### Étapes
+1. **Identifier le volume** :
+   - Listez les volumes attachés à l'instance :
+     ```bash
+     lsblk
+     ```
+   - Notez le nom du périphérique (par exemple, `/dev/xvdf`).
+
+2. **Créer un point de montage** :
+   - Créez un répertoire où le volume sera monté :
+     ```bash
+     sudo mkdir /mnt/mon_volume
+     ```
+
+3. **Monter le volume manuellement** (optionnel pour tester) :
+   - Montez le volume sur le point de montage :
+     ```bash
+     sudo mount /dev/xvdf /mnt/mon_volume
+     ```
+   - Vérifiez que le volume est monté :
+     ```bash
+     df -h
+     ```
+
+4. **Mettre à jour `/etc/fstab`** :
+   - Ajoutez une entrée dans le fichier `/etc/fstab` pour monter le volume automatiquement au démarrage :
+     ```bash
+     echo '/dev/xvdf /mnt/mon_volume ext4 defaults,nofail 0 2' | sudo tee -a /etc/fstab
+     ```
+     - Remplacez `/dev/xvdf` par le nom de votre périphérique.
+     - Remplacez `ext4` par le système de fichiers utilisé (par exemple, `xfs` si applicable).
+
+5. **Tester la configuration** :
+   - Démontez le volume :
+     ```bash
+     sudo umount /mnt/mon_volume
+     ```
+   - Remontez tous les systèmes de fichiers définis dans `/etc/fstab` :
+     ```bash
+     sudo mount -a
+     ```
+   - Vérifiez que le volume est monté correctement :
+     ```bash
+     df -h
+     ```
+
+### Bonnes pratiques
+- **Utiliser l'UUID** : Au lieu de spécifier le périphérique (`/dev/xvdf`), utilisez l'UUID du volume pour éviter les problèmes si le nom du périphérique change.
+  - Trouvez l'UUID du volume :
+    ```bash
+    sudo blkid /dev/xvdf
+    ```
+  - Exemple d'entrée `/etc/fstab` avec UUID :
+    ```bash
+    UUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx /mnt/mon_volume ext4 defaults,nofail 0 2
+    ```
+
+- **Option `nofail`** : Empêche l'échec du démarrage si le volume n'est pas disponible.
+
 ## Les autres stockages pour EC2
 En plus des volumes EBS, EC2 prend en charge :
 - **Instance Store** : Stockage temporaire lié au cycle de vie de l'instance. Utilisé pour des données éphémères comme des caches ou des fichiers temporaires.
@@ -171,86 +267,13 @@ Pour se connecter à l'instance : (click droit sur l'instance) EC2 > Instances >
 
 Plusieurs méthodes sont possibles pour se connecter.
 
-## Error : Server refused to connect
+Utilisation IAM
 
-L'erreur **"refused to connect"** sur le port 80 indique que votre serveur n'est pas accessible depuis l'extérieur. Cela peut être dû à plusieurs raisons. Voici les étapes pour résoudre ce problème :
+Utiliser le CLI aws dans l'instance
 
-
-### 1. **Vérifiez les groupes de sécurité AWS**
-Assurez-vous que votre groupe de sécurité EC2 autorise le trafic entrant sur le port 80 (HTTP). Voici comment vérifier et configurer cela :
-
-1. Allez dans la console AWS.
-2. Naviguez vers **EC2 > Sécurité > Groupes de sécurité**.
-3. Sélectionnez le groupe de sécurité associé à votre instance EC2.
-4. Ajoutez une règle dans les **Inbound Rules** :
-   - **Type** : HTTP
-   - **Protocole** : TCP
-   - **Port Range** : 80
-   - **Source** : `0.0.0.0/0` (pour autoriser tout le monde) ou une plage IP spécifique.
-
-
-### 2. **Vérifiez que le serveur écoute sur le port 80**
-Connectez-vous à votre instance EC2 via SSH et vérifiez que votre application Node.js est bien en cours d'exécution et écoute sur le port 80 :
-
-1. Connectez-vous à l'instance :
-   ```bash
-   ssh -i "votre-cle.pem" ec2-user@<adresse-ip>
-   ```
-
-2. Vérifiez les processus Node.js :
-   ```bash
-   ps aux | grep node
-   ```
-
-3. Vérifiez que le port 80 est en écoute :
-   ```bash
-   sudo netstat -tuln | grep 80
-   ```
-
-Si le port 80 n'est pas en écoute, assurez-vous que votre application Node.js est bien démarrée.
-
-
-### 3. **Vérifiez le pare-feu sur l'instance**
-Si vous utilisez un pare-feu comme `iptables` ou `firewalld`, assurez-vous qu'il autorise le trafic sur le port 80 :
-
-- Pour vérifier les règles `iptables` :
-  ```bash
-  sudo iptables -L
-  ```
-
-- Pour désactiver temporairement le pare-feu (à des fins de test) :
-  ```bash
-  sudo systemctl stop firewalld
-  ```
-
-
-### 4. **Vérifiez l'adresse IP utilisée**
-Assurez-vous d'utiliser l'**adresse IPv4 publique** de votre instance EC2 pour accéder à votre application. Vous pouvez trouver cette adresse dans la console AWS sous **EC2 > Instances > IPv4 publique**.
-
-Accédez à votre application via un navigateur ou `curl` :
-```bash
-curl http://<adresse-ip-publique>
+```shel
+aws iam list=users
 ```
-
-
-### 5. **Redémarrez votre application**
-Si tout semble correct mais que le problème persiste, redémarrez votre application Node.js pour vous assurer qu'elle fonctionne correctement :
-
-```bash
-node /home/ec2-user/myapp/index.js
-```
-
-
-### 6. **Bonnes pratiques**
-- **Utilisez HTTPS** : Configurez un certificat SSL pour sécuriser votre application (port 443).
-- **Surveillez les logs** : Vérifiez les logs de votre application pour détecter d'éventuelles erreurs :
-  ```bash
-  tail -f /home/ec2-user/myapp/index.js
-  ```
-
-
-Si vous suivez ces étapes et que le problème persiste, partagez les résultats des commandes pour que je puisse vous aider davantage !
-
 
 ## Lexique
 
