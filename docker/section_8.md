@@ -1,6 +1,6 @@
 ---
-title: Docker
-description: Utiliser Docker Compose
+title: Utiliser Docker Compose
+description: Learn Docker
 order: 8
 ---
 

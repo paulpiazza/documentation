@@ -1,6 +1,6 @@
 ---
-title: Docker
-description: Trouver et partager des images
+title: Trouver et partager des images
+description: Learn Docker
 order: 4
 ---
 

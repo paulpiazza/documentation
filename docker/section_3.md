@@ -1,6 +1,6 @@
 ---
-title: Docker
-description: Une image avec Dockerfile
+title: Une image avec Dockerfile
+description: Learn Docker
 order: 3
 ---
 

@@ -1,6 +1,6 @@
 ---
-title: Learn Docker
-description: Les bases de Docker
+title: Les bases de Docker
+Description: Learn Docker
 order: 2
 ---
 

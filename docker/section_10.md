@@ -1,6 +1,6 @@
 ---
-title: Docker
-description: Utiliser Docker avec plusieurs services
+title: Utiliser Docker avec plusieurs services
+description: Learn Docker
 order: 9
 ---
 

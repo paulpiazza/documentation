@@ -1,6 +1,6 @@
 ---
-title: Docker
-description: Créer une image Docker pour un serveur Node.js
+title: Créer une image Docker pour un serveur Node.js
+description: Learn Docker
 order: 5
 ---
 

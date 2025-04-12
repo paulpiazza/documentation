@@ -1,6 +1,6 @@
 ---
-title: Docker
-description: Dockerfile et Docker Compose pour une application client
+title: Dockerfile et Docker Compose pour une application client
+description: Learn Docker
 order: 9
 ---
 
