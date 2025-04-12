@@ -85,7 +85,6 @@ L'environnement de développement est conçu pour permettre une interaction flui
 - **Reverse proxy sur Nginx** : Nginx redirige les requêtes soit vers le client (Angular), soit vers l'API (Node.js).
 - **Socks Node.js** : Node.js gère les connexions et les requêtes côté serveur.
 
-#### Exemple :
 Imaginez que vous développez une application de gestion de tâches. Lorsqu'un utilisateur accède à l'interface web, Nginx redirige la requête vers Angular. Si l'utilisateur envoie une requête pour récupérer des données, Nginx la redirige vers l'API Node.js.
 
 #### Exemple de configuration `docker-compose.yml` :
@@ -224,7 +223,6 @@ deploy:
 ### Étape 3 : Configuration des variables CI/CD
 Dans l'interface GitLab, configurez les variables CI/CD nécessaires, comme les clés SSH pour accéder au serveur ou les secrets pour votre application.
 
-#### Exemple :
 - `SSH_PRIVATE_KEY`: Clé privée pour accéder au serveur.
 - `API_SECRET_KEY`: Clé secrète pour l'API.
 

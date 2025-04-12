@@ -8,7 +8,7 @@ order: 8
 
 Docker Compose est un outil qui permet de définir et de gérer des applications multi-conteneurs Docker. Il utilise un fichier YAML pour configurer les services, les réseaux et les volumes nécessaires à une application.
 
-**Exemple :**
+
 ```yaml
 version: '3.8'
 services:
@@ -22,7 +22,7 @@ services:
 
 Pour utiliser Docker Compose, commencez par créer un fichier `docker-compose.yml`. Ensuite, utilisez la commande `docker-compose up` pour démarrer les services.
 
-**Exemple :**
+
 ```bash
 docker-compose up
 ```
@@ -31,7 +31,7 @@ docker-compose up
 
 Vous pouvez construire des images personnalisées directement depuis un `Dockerfile` en utilisant Docker Compose.
 
-**Exemple :**
+
 ```yaml
 services:
   app:
@@ -44,7 +44,7 @@ services:
 
 Les ports permettent de mapper les ports du conteneur à ceux de l'hôte, tandis que les volumes permettent de partager des données entre l'hôte et le conteneur.
 
-**Exemple :**
+
 ```yaml
 services:
   db:
@@ -61,7 +61,7 @@ volumes:
 
 Les variables d'environnement peuvent être définies dans le fichier `docker-compose.yml` ou dans un fichier `.env`.
 
-**Exemple :**
+
 ```yaml
 services:
   app:
@@ -74,7 +74,7 @@ services:
 
 Docker Compose permet de configurer des réseaux pour que les services puissent communiquer entre eux.
 
-**Exemple :**
+
 ```yaml
 services:
   frontend:
@@ -93,7 +93,7 @@ networks:
 
 Pour un serveur Node.js, vous pouvez définir un service qui utilise une image Node.js et monte le code source.
 
-**Exemple :**
+
 ```yaml
 services:
   node:
@@ -108,7 +108,7 @@ services:
 
 Configurez un service pour votre serveur en définissant les dépendances, les ports et les volumes nécessaires.
 
-**Exemple :**
+
 ```yaml
 services:
   server:
@@ -123,7 +123,6 @@ services:
 
 `depends_on` garantit que certains services démarrent avant d'autres, tandis que `restart` définit la politique de redémarrage.
 
-**Exemple :**
 ```yaml
 services:
   app:
@@ -140,7 +139,7 @@ Quelques commandes utiles :
 - `docker-compose logs` : Affiche les logs des services.
 - `docker-compose ps` : Liste les services en cours d'exécution.
 
-**Exemple :**
+
 ```bash
 docker-compose logs -f
 ```

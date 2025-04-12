@@ -26,7 +26,6 @@ L'écosystème Docker comprend plusieurs outils et services qui facilitent la ge
 ## Conteneurs multi-étapes
 Les conteneurs multi-étapes permettent de réduire la taille des images Docker en séparant les étapes de construction et d'exécution. Cela est particulièrement utile pour les applications nécessitant une compilation.
 
-### Exemple
 ```dockerfile
 # Étape 1 : Compilation
 FROM maven:3.8.5-openjdk-11 AS build

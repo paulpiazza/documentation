@@ -18,7 +18,6 @@ Depuis Java 10, il est possible d'utiliser le mot-clé `var` pour déclarer des 
 - Améliore la lisibilité dans certains cas, notamment avec des types complexes.
 - Ne peut être utilisé que pour des variables locales (dans une méthode ou un bloc) et non pour les champs de classe.
 
-### Exemple
 ```java
 var age = 25; // Le type est déduit comme int
 var nom = "Alice"; // Le type est déduit comme String
