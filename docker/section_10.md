@@ -246,7 +246,7 @@ services:
 ```
 
 #### Exemple de configuration pour les variables d'environnement dans `.env` :
-```txt
+```
 NODE_ENV=production
 DB_HOST=mongodb
 DB_PORT=27017
