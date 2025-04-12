@@ -1,6 +1,6 @@
 ---
-title: Docker
-description: Introduction
+title: Introduction to Docker
+description: Learn Docker
 order: 1
 ---
 

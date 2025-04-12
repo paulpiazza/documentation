@@ -1,6 +1,6 @@
 ---
 title: Learn Docker
-description: Docker
+description: Learn Docker
 order: 0
 ---
 
