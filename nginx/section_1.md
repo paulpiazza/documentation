@@ -59,6 +59,9 @@ Un VPS est un serveur virtuel privé. Configurez-le pour héberger vos applicati
    ```
 7. Configurez votre VPS selon vos besoins (mise à jour du système, installation de logiciels, etc.).
 
+Exemple avec OVH [Guide Support OVH - Secure your VPS](https://support.us.ovhcloud.com/hc/en-us/articles/4412351365139-How-to-Secure-a-VPS)
+
+
 ### Connexion SSH au VPS
 
 Pour vous connecter à votre VPS via SSH, suivez ces étapes :
