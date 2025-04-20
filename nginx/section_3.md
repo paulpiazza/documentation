@@ -56,6 +56,44 @@ http {
 
 Cet exemple montre comment Nginx peut gérer plusieurs rôles (serveur de fichiers statiques et proxy) dans une seule configuration.
 
+## Processus et Threads dans Nginx
+
+Nginx utilise une architecture basée sur des **processus** plutôt que des **threads**, ce qui le distingue de certains autres serveurs web comme Apache.
+
+### Processus
+
+- **Définition** : Un processus est une instance indépendante d'un programme en cours d'exécution. Chaque processus dispose de sa propre mémoire et de ses ressources.
+- **Dans Nginx** :
+  - Nginx utilise un **processus maître** et plusieurs **processus travailleurs**.
+  - Le processus maître gère la configuration et supervise les processus travailleurs.
+  - Les processus travailleurs gèrent les connexions des clients et traitent les requêtes.
+
+- **Avantages** :
+  - Isolation : Si un processus travailleur échoue, les autres continuent de fonctionner.
+  - Sécurité : Chaque processus est isolé, ce qui limite les risques en cas de vulnérabilité.
+
+### Threads
+
+- **Définition** : Un thread est une unité d'exécution légère qui partage la mémoire et les ressources avec d'autres threads dans le même processus.
+- **Pourquoi Nginx n'utilise pas de threads** :
+  - Les threads partagent la mémoire, ce qui peut entraîner des problèmes de concurrence et de synchronisation.
+  - L'utilisation de processus permet une meilleure stabilité et une gestion plus simple des ressources.
+
+### Comparaison entre Processus et Threads
+
+| **Aspect**          | **Processus**                          | **Threads**                          |
+|----------------------|----------------------------------------|---------------------------------------|
+| **Mémoire**          | Chaque processus a sa propre mémoire. | Les threads partagent la même mémoire. |
+| **Isolation**        | Forte isolation entre processus.      | Faible isolation entre threads.       |
+| **Performance**      | Plus lourd en termes de ressources.   | Plus léger et rapide à créer.         |
+| **Sécurité**         | Plus sécurisé grâce à l'isolation.    | Moins sécurisé en cas de bogue.       |
+
+### Pourquoi Nginx utilise des processus ?
+
+1. **Stabilité** : Si un processus travailleur échoue, le processus maître peut le redémarrer sans affecter les autres.
+2. **Simplicité** : La gestion des processus est plus simple que celle des threads, notamment pour éviter les problèmes de concurrence.
+3. **Performance** : Grâce à son architecture événementielle, Nginx peut gérer des milliers de connexions simultanées avec un nombre limité de processus.
+
 ## Start, stop, reload de la configuration
 
 Utilisez les commandes suivantes pour gérer Nginx :
@@ -352,8 +390,6 @@ server {
 }
 ```
 
-### Explications des directives
-
 1. **`listen 80 default_server;`**
    - **Description** : Configure le serveur pour écouter sur le port 80 (HTTP) et le définit comme serveur par défaut.
    - **Utilité** : Si aucune autre configuration ne correspond à une requête, ce serveur sera utilisé.
@@ -379,63 +415,12 @@ server {
      - **`$uri/`** : Vérifie si un répertoire correspondant existe.
      - **`=404`** : Retourne une erreur 404 si aucun fichier ou répertoire correspondant n'est trouvé.
    - **Exemple** : Une requête pour `/about.html` servira `/var/www/html/about.html` si ce fichier existe, sinon une erreur 404 sera retournée.
-
-
-## Explication de la configuration par défaut dans `sites-enabled`
-
-Le fichier de configuration par défaut dans `/etc/nginx/sites-enabled/` est utilisé pour configurer un serveur virtuel de base. Voici une explication détaillée de chaque directive :
-
-```nginx
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-
-    index index.html index.htm index.nginx-debian.html;
-
-    server_name _;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-}
-```
-
-### Explications des directives
-
-1. **`listen 80 default_server;`**
-   - **Description** : Configure le serveur pour écouter sur le port 80 (HTTP) et le définit comme serveur par défaut.
-   - **Utilité** : Si aucune autre configuration ne correspond à une requête, ce serveur sera utilisé.
-
-2. **`listen [::]:80 default_server;`**
-   - **Description** : Active le support IPv6 pour le port 80 et le définit également comme serveur par défaut.
-
-3. **`root /var/www/html;`**
-   - **Description** : Définit le répertoire racine où les fichiers du site web sont stockés.
-   - **Exemple** : Une requête pour `/index.html` servira le fichier `/var/www/html/index.html`.
-
-4. **`index index.html index.htm index.nginx-debian.html;`**
-   - **Description** : Spécifie les fichiers index par défaut à utiliser lorsqu'une requête est faite pour un répertoire.
-   - **Exemple** : Une requête pour `/` servira `/var/www/html/index.html` si ce fichier existe.
-
-5. **`server_name _;`**
-   - **Description** : Accepte toutes les requêtes, quel que soit le nom de domaine utilisé.
-   - **Utilité** : Utile pour un serveur par défaut ou lorsque le nom de domaine n'est pas spécifié.
-
-6. **`location / { try_files $uri $uri/ =404; }`**
-   - **Description** : Configure le comportement pour les requêtes vers `/` :
-     - **`$uri`** : Vérifie si le fichier demandé existe.
-     - **`$uri/`** : Vérifie si un répertoire correspondant existe.
-     - **`=404`** : Retourne une erreur 404 si aucun fichier ou répertoire correspondant n'est trouvé.
-   - **Exemple** : Une requête pour `/about.html` servira `/var/www/html/about.html` si ce fichier existe, sinon une erreur 404 sera retournée.
-
 
 ## Les modules de Nginx
 
 Nginx est modulaire, ce qui signifie qu'il peut être étendu avec des modules pour ajouter des fonctionnalités spécifiques. Voici une liste des principaux modules et leurs usages :
 
-### 1. **Module HTTP**
+**Module HTTP**
 Le module HTTP est le plus utilisé. Il permet à Nginx de gérer les requêtes HTTP et HTTPS.
 
 - **Fonctionnalités principales** :
@@ -445,7 +430,6 @@ Le module HTTP est le plus utilisé. Il permet à Nginx de gérer les requêtes 
   - Réécriture d'URL.
   - Gestion des caches.
 
-- **Exemple** :
   ```nginx
   http {
       server {
@@ -460,7 +444,7 @@ Le module HTTP est le plus utilisé. Il permet à Nginx de gérer les requêtes 
   }
   ```
 
-### 2. **Module Mail**
+**Module Mail**
 Le module Mail permet à Nginx de fonctionner comme un proxy pour les protocoles de messagerie (IMAP, POP3, SMTP).
 
 - **Fonctionnalités principales** :
@@ -468,7 +452,6 @@ Le module Mail permet à Nginx de fonctionner comme un proxy pour les protocoles
   - Authentification des utilisateurs.
   - Support des connexions sécurisées (SSL/TLS).
 
-- **Exemple** :
   ```nginx
   mail {
       server {
@@ -479,7 +462,7 @@ Le module Mail permet à Nginx de fonctionner comme un proxy pour les protocoles
   }
   ```
 
-### 3. **Module Stream**
+**Module Stream**
 Le module Stream est utilisé pour gérer les connexions TCP et UDP, comme celles des bases de données ou des services SSH.
 
 - **Fonctionnalités principales** :
@@ -487,7 +470,6 @@ Le module Stream est utilisé pour gérer les connexions TCP et UDP, comme celle
   - Équilibrage de charge pour les services non-HTTP.
   - Support des connexions sécurisées (SSL/TLS).
 
-- **Exemple** :
   ```nginx
   stream {
       server {
@@ -497,7 +479,7 @@ Le module Stream est utilisé pour gérer les connexions TCP et UDP, comme celle
   }
   ```
 
-### 4. **Module GeoIP**
+**Module GeoIP**
 Le module GeoIP permet de déterminer la localisation géographique des utilisateurs en fonction de leur adresse IP.
 
 - **Fonctionnalités principales** :
@@ -505,7 +487,6 @@ Le module GeoIP permet de déterminer la localisation géographique des utilisat
   - Redirection ou personnalisation du contenu en fonction de la localisation.
   - Support des bases de données GeoIP (GeoLite2).
 
-- **Exemple** :
   ```nginx
   http {
       geoip_country /usr/share/GeoIP/GeoIP.dat;
@@ -523,7 +504,41 @@ Le module GeoIP permet de déterminer la localisation géographique des utilisat
   }
   ```
 
-## Gestion de la configuration Nginx
+## Noms des modules dans Nginx
+
+Nginx est modulaire et supporte plusieurs modules pour étendre ses fonctionnalités. Voici une liste des principaux modules disponibles :
+
+### Modules HTTP
+- **ngx_http_core_module** : Module de base pour gérer les requêtes HTTP.
+- **ngx_http_ssl_module** : Support des connexions HTTPS.
+- **ngx_http_gzip_module** : Compression des réponses HTTP avec Gzip.
+- **ngx_http_proxy_module** : Proxy inverse pour rediriger les requêtes vers des serveurs backend.
+- **ngx_http_rewrite_module** : Réécriture et redirection des URL.
+- **ngx_http_headers_module** : Gestion des en-têtes HTTP.
+- **ngx_http_geoip_module** : Détection de la localisation géographique des utilisateurs.
+- **ngx_http_fastcgi_module** : Support des applications FastCGI (comme PHP-FPM).
+- **ngx_http_uwsgi_module** : Support des applications uWSGI.
+- **ngx_http_scgi_module** : Support des applications SCGI.
+- **ngx_http_stub_status_module** : Affichage des statistiques sur l'état de Nginx.
+
+### Modules Stream
+- **ngx_stream_core_module** : Module de base pour gérer les connexions TCP/UDP.
+- **ngx_stream_ssl_module** : Support des connexions sécurisées (SSL/TLS) pour les flux TCP/UDP.
+- **ngx_stream_proxy_module** : Proxy pour les connexions TCP/UDP.
+- **ngx_stream_geoip_module** : Détection de la localisation géographique pour les flux TCP/UDP.
+
+### Modules Mail
+- **ngx_mail_core_module** : Module de base pour les protocoles de messagerie (IMAP, POP3, SMTP).
+- **ngx_mail_ssl_module** : Support des connexions sécurisées (SSL/TLS) pour les protocoles de messagerie.
+- **ngx_mail_auth_http_module** : Authentification des utilisateurs via un backend HTTP.
+
+### Modules additionnels
+- **ngx_http_geoip2_module** : Version améliorée du module GeoIP utilisant les bases de données GeoLite2.
+- **ngx_http_image_filter_module** : Manipulation des images (redimensionnement, conversion).
+- **ngx_http_xslt_filter_module** : Transformation des réponses XML avec XSLT.
+- **ngx_http_perl_module** : Intégration avec Perl pour des scripts dynamiques.
+
+
 
 ### Validation de la configuration Nginx
 
@@ -611,51 +626,51 @@ http {
 }
 ```
 
-#### **`sendfile on;`**
+**`sendfile on;`**
 - **Description** : Active l'envoi efficace des fichiers en utilisant `sendfile()`, une méthode système pour améliorer les performances.  
 - **Utilité** : Réduit la surcharge CPU en évitant la copie inutile des données entre le noyau et l'espace utilisateur.
 
-#### **`tcp_nopush on;`**
+**`tcp_nopush on;`**
 - **Description** : Optimise l'envoi des paquets TCP en regroupant les données avant de les envoyer.  
 - **Utilité** : Réduit la latence pour les grandes réponses HTTP.
 
-#### **`types_hash_max_size 2048;`**
+**`types_hash_max_size 2048;`**
 - **Description** : Définit la taille maximale de la table de hachage utilisée pour les types MIME.  
 - **Utilité** : Améliore les performances pour les configurations avec de nombreux types MIME.
 
-#### **`include /etc/nginx/mime.types;`**
+**`include /etc/nginx/mime.types;`**
 - **Description** : Inclut un fichier contenant les associations entre extensions de fichiers et types MIME.  
 - **Exemple** : Associe `.html` à `text/html` ou `.css` à `text/css`.
 
-#### **`default_type application/octet-stream;`**
+**`default_type application/octet-stream;`**
 - **Description** : Définit le type MIME par défaut pour les fichiers dont l'extension n'est pas reconnue.  
 - **Valeur par défaut** : `application/octet-stream` (fichier binaire générique).
 
-#### **`ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;`**
+**`ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;`**
 - **Description** : Définit les protocoles SSL/TLS supportés.  
 - **Utilité** : Désactive les protocoles obsolètes comme SSLv3 pour des raisons de sécurité.
 
-#### **`ssl_prefer_server_ciphers on;`**
+**`ssl_prefer_server_ciphers on;`**
 - **Description** : Préfère les chiffrements définis par le serveur plutôt que ceux proposés par le client.  
 - **Utilité** : Renforce la sécurité en utilisant des chiffrements plus robustes.
 
-#### **`access_log /var/log/nginx/access.log;`**
+**`access_log /var/log/nginx/access.log;`**
 - **Description** : Spécifie le fichier où sont enregistrées les requêtes HTTP reçues par Nginx.  
 - **Utilité** : Utile pour l'analyse du trafic et le dépannage.
 
-#### **`error_log /var/log/nginx/error.log;`**
+**`error_log /var/log/nginx/error.log;`**
 - **Description** : Spécifie le fichier où sont enregistrées les erreurs rencontrées par Nginx.  
 - **Utilité** : Aide à identifier et résoudre les problèmes.
 
-#### **`gzip on;`**
+**`gzip on;`**
 - **Description** : Active la compression Gzip pour réduire la taille des réponses HTTP.  
 - **Utilité** : Améliore les temps de chargement des pages en réduisant la quantité de données transférées.
 
-#### **`include /etc/nginx/conf.d/*.conf;`**
+**`include /etc/nginx/conf.d/*.conf;`**
 - **Description** : Inclut les fichiers de configuration supplémentaires situés dans `/etc/nginx/conf.d/`.  
 - **Utilité** : Permet de modulariser la configuration.
 
-#### **`include /etc/nginx/sites-enabled/*;`**
+**`include /etc/nginx/sites-enabled/*;`**
 - **Description** : Inclut les fichiers de configuration des sites activés situés dans `/etc/nginx/sites-enabled/`.  
 - **Utilité** : Active les configurations des serveurs virtuels.
 
