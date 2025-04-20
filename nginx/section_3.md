@@ -331,6 +331,56 @@ Sous Debian, les fichiers de configuration de Nginx sont situés dans le répert
      load_module modules/ngx_http_geoip_module.so;
      ```
 
+## Exemple de configuration d'un serveur virtuel
+
+Voici une explication détaillée de la configuration suivante :
+
+```nginx
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+```
+
+### Explications des directives
+
+1. **`listen 80 default_server;`**
+   - **Description** : Configure le serveur pour écouter sur le port 80 (HTTP) et le définit comme serveur par défaut.
+   - **Utilité** : Si aucune autre configuration ne correspond à une requête, ce serveur sera utilisé.
+
+2. **`listen [::]:80 default_server;`**
+   - **Description** : Active le support IPv6 pour le port 80 et le définit également comme serveur par défaut.
+
+3. **`root /var/www/html;`**
+   - **Description** : Définit le répertoire racine où les fichiers du site web sont stockés.
+   - **Exemple** : Une requête pour `/index.html` servira le fichier `/var/www/html/index.html`.
+
+4. **`index index.html index.htm index.nginx-debian.html;`**
+   - **Description** : Spécifie les fichiers index par défaut à utiliser lorsqu'une requête est faite pour un répertoire.
+   - **Exemple** : Une requête pour `/` servira `/var/www/html/index.html` si ce fichier existe.
+
+5. **`server_name _;`**
+   - **Description** : Accepte toutes les requêtes, quel que soit le nom de domaine utilisé.
+   - **Utilité** : Utile pour un serveur par défaut ou lorsque le nom de domaine n'est pas spécifié.
+
+6. **`location / { try_files $uri $uri/ =404; }`**
+   - **Description** : Configure le comportement pour les requêtes vers `/` :
+     - **`$uri`** : Vérifie si le fichier demandé existe.
+     - **`$uri/`** : Vérifie si un répertoire correspondant existe.
+     - **`=404`** : Retourne une erreur 404 si aucun fichier ou répertoire correspondant n'est trouvé.
+   - **Exemple** : Une requête pour `/about.html` servira `/var/www/html/about.html` si ce fichier existe, sinon une erreur 404 sera retournée.
+
+
 ## Explication de la configuration par défaut dans `sites-enabled`
 
 Le fichier de configuration par défaut dans `/etc/nginx/sites-enabled/` est utilisé pour configurer un serveur virtuel de base. Voici une explication détaillée de chaque directive :
@@ -380,11 +430,6 @@ server {
      - **`=404`** : Retourne une erreur 404 si aucun fichier ou répertoire correspondant n'est trouvé.
    - **Exemple** : Une requête pour `/about.html` servira `/var/www/html/about.html` si ce fichier existe, sinon une erreur 404 sera retournée.
 
----
-
-### Résumé
-
-Cette configuration par défaut est simple et adaptée pour servir des fichiers statiques. Elle peut être modifiée ou étendue pour inclure des fonctionnalités supplémentaires comme des proxys ou des redirections.
 
 ## Les modules de Nginx
 
@@ -531,7 +576,6 @@ include /etc/nginx/modules-enabled/*.conf;
 - **Description** : Inclut les fichiers de configuration des modules dynamiques activés.  
 - **Exemple** : Les modules comme `ngx_http_geoip2_module` ou `ngx_stream_module` sont activés ici.
 
----
 
 ### Section `events`
 
