@@ -109,7 +109,8 @@ server {
   Ce bloc ne répond qu'aux requêtes adressées à `192.168.1.100` sur le port 80 et pour le nom de domaine `sub.example.com`.  
   > Utile pour héberger des sous-domaines sur des serveurs ou interfaces réseau différents.
 
-Nginx sélectionne d'abord le bloc `server` selon l'adresse IP et le port (`listen`), puis selon le nom de domaine (`server_name`). Si aucune correspondance n'est trouvée, il utilise le serveur par défaut.
+> **A savoir**
+> Nginx sélectionne d'abord le bloc `server` selon l'adresse IP et le port (`listen`), puis selon le nom de domain (`server_name`). Si aucune correspondance n'est trouvée, il utilise le serveur par défaut.
 
 ### Utilisation d'expressions régulières avec `server_name`
 
@@ -179,25 +180,220 @@ Dans cet exemple, si une requête arrive sur le port 80 sans correspondre à un 
 > - `default_server` permet de définir un serveur de secours ou générique.
 > - Pratique pour afficher une page d'accueil par défaut ou un message d'erreur personnalisé.
 
-## Configuration des emplacements avec location
+## Configuration avancée des emplacements (`location`) en Nginx
 
-La directive `location` permet de définir des règles pour gérer les requêtes. Exemple :
+Un bloc `location` définit une règle pour faire correspondre une partie de l’URL demandée par le client. Selon la correspondance, Nginx applique une configuration spécifique (racine, proxy, redirection, etc.).
+
+### Les modificateurs de `location`
+
+Nginx propose plusieurs modificateurs pour affiner la correspondance :
+
+- **Sans modificateur** : correspondance par préfixe (la plus simple).  
+  Exemple : `location /images/ { ... }` correspond à toutes les URL commençant par `/images/`.
+
+- **`=`** : correspondance exacte.  
+  Exemple : `location = / { ... }` ne correspond qu’à la page d’accueil `/` exactement.
+
+- **`~`** : correspondance par expression régulière (sensible à la casse).  
+  Exemple : `location ~ ^/download/(.+)$ { ... }` correspond à toutes les URL commençant par `/download/` suivies de n’importe quoi (sensible à la casse).
+
+- **`~*`** : expression régulière insensible à la casse.  
+  Exemple : `location ~* \.jpg$ { ... }` correspond à toutes les URL se terminant par `.jpg` ou `.JPG`.
+
+- **`^~`** : priorité à la correspondance de préfixe.  
+  Si une URL correspond à ce préfixe, Nginx n’essaie pas les expressions régulières.  
+  Exemple : `location ^~ /static/ { ... }`
+
+#### Ordre de sélection des emplacements
+
+1. Correspondance exacte (`=`)
+2. Correspondance de préfixe la plus longue avec `^~`
+3. Expressions régulières (`~`, `~*`) dans l’ordre d’apparition
+4. Correspondance de préfixe la plus longue (sans modificateur)
+5. Bloc par défaut (`location /`)
+
+### Exemples détaillés
+
+#### Exemple 1
+
 ```nginx
-location /images/ {
-    root /data;
+server {
+    listen 80;
+    server_name exemple.fr;
+
+    location = / {
+        # Configuration spécifique pour la page d'accueil
+    }
+
+    location /images/ {
+        # Configuration spécifique pour les images
+    }
+
+    location /api/ {
+        # Configuration spécifique pour l'API
+    }
+
+    location ~ ^/download/(.+)$ {
+        # Configuration spécifique pour les téléchargements
+    }
 }
 ```
 
+**Explications :**
+- `location = /` : s’applique uniquement à la page d’accueil.
+- `location /images/` : toutes les URL commençant par `/images/` (ex : `/images/photo.jpg`).
+- `location /api/` : toutes les URL commençant par `/api/` (ex : `/api/users`).
+- `location ~ ^/download/(.+)$` : toutes les URL commençant par `/download/` suivies de n’importe quoi (ex : `/download/file.zip`), grâce à une expression régulière.
 
+#### Exemple 2
 
-## La directive root
-
-La directive `root` spécifie le répertoire racine pour les fichiers. Exemple :
 ```nginx
-root /var/www/html;
+server {
+    listen 80;
+    server_name example.fr;
+
+    location = / {
+        # Configuration spécifique pour la page d'accueil
+    }
+
+    location ^~ /static/ {
+        # Configuration pour les fichiers statiques
+    }
+
+    location /api/ {
+        # Configuration spécifique pour l'API
+    }
+
+    location ~ ^/files/(.+)$ {
+        # Configuration spécifique pour les fichiers téléchargeables
+    }
+
+    location / {
+        # Configuration pour les autres requêtes
+    }
+}
 ```
 
+**Explications :**
+- `location = /` : page d’accueil uniquement.
+- `location ^~ /static/` : priorité à toutes les URL commençant par `/static/` (ex : `/static/js/app.js`). Les expressions régulières ne seront pas testées si ce préfixe correspond.
+- `location /api/` : toutes les URL commençant par `/api/`.
+- `location ~ ^/files/(.+)$` : expression régulière pour les téléchargements (ex : `/files/report.pdf`).
+- `location /` : toutes les autres requêtes (par défaut).
 
+#### Exemple 3
+
+```nginx
+server {
+    listen 80;
+    server_name exemple.fr;
+
+    location = / {
+        # Configuration spécifique pour la page d'accueil
+    }
+
+    location ^~ /assets/ {
+        # Configuration pour les fichiers d'assets (images, CSS, JS)
+    }
+
+    location /api/ {
+        # Configuration spécifique pour l'API
+    }
+
+    location ~* ^/downloads/(.+\.(?:pdf|zip|docx?))$ {
+        # Configuration spécifique pour les fichiers téléchargeables (PDF, ZIP, DOC, DOCX)
+    }
+
+    location ~ /private/ {
+        # Configuration pour les fichiers privés
+    }
+
+    location / {
+        # Configuration pour les autres requêtes
+    }
+}
+```
+
+**Explications :**
+- `location = /` : page d’accueil.
+- `location ^~ /assets/` : priorité à toutes les URL commençant par `/assets/` (ex : `/assets/style.css`).
+- `location /api/` : toutes les URL commençant par `/api/`.
+- `location ~* ^/downloads/(.+\.(?:pdf|zip|docx?))$` : expression régulière insensible à la casse pour les fichiers PDF, ZIP, DOC, DOCX dans `/downloads/`.
+- `location ~ /private/` : expression régulière (sensible à la casse) pour `/private/`.
+- `location /` : toutes les autres requêtes.
+
+**Conseils :**
+- Utilisez `location = /` pour personnaliser la page d’accueil.
+- Privilégiez `^~` pour les dossiers statiques afin d’éviter les surcoûts des regex.
+- Les expressions régulières sont puissantes mais doivent être utilisées avec parcimonie pour ne pas complexifier la configuration.
+- L’ordre et le choix des modificateurs influencent directement le comportement de Nginx.
+
+Pour tester vos règles de `location`, utilisez [nginx.viraptor.info](https://nginx.viraptor.info/).
+
+## La directive `root`
+
+La directive `root` définit le répertoire racine à partir duquel Nginx va chercher les fichiers à servir pour une requête donnée. Elle peut être placée dans différents contextes : global (`server`), ou local à un bloc `location`.  
+La valeur de `root` la plus spécifique (dans le bloc `location` le plus précis) est celle qui sera utilisée pour la requête.
+
+**Exemple :**
+```nginx
+server {
+    listen 80;
+    server_name exemple.fr;
+
+    root /var/www/html; # racine par défaut
+
+    location /images/ {
+        root /data; # racine spécifique pour /images/
+    }
+}
+```
+- Une requête pour `/index.html` servira `/var/www/html/index.html`.
+- Une requête pour `/images/photo.jpg` servira `/data/images/photo.jpg` 
+
+> **Attention au chemin**
+> Le chemin complet est la concaténation de la valeur de `root` et de l’URI demandée.
+
+### Les locations prioritaires
+
+Nginx choisit le bloc `location` le plus approprié selon un ordre de priorité bien défini :
+
+1. **Correspondance exacte (`=`)** : la plus prioritaire, ne correspond qu’à l’URL exacte.
+2. **Préfixe prioritaire (`^~`)** : si le préfixe correspond, Nginx n’ira pas tester les expressions régulières.
+3. **Expressions régulières (`~`, `~*`)** : testées dans l’ordre d’apparition dans le fichier.
+4. **Préfixe simple (sans modificateur)** : la correspondance de préfixe la plus longue.
+5. **Bloc par défaut (`location /`)** : utilisé si rien d’autre ne correspond.
+
+**Exemple pédagogique :**
+```nginx
+server {
+    root /var/www/html;
+
+    location = / {
+        # Priorité 1 : page d’accueil exacte
+    }
+
+    location ^~ /static/ {
+        # Priorité 2 : tous les fichiers sous /static/
+    }
+
+    location ~* \.(jpg|png)$ {
+        # Priorité 3 : toutes les images (regex insensible à la casse)
+    }
+
+    location / {
+        # Priorité 4 : toutes les autres requêtes
+    }
+}
+```
+- Une requête pour `/` utilisera le bloc `location = /`.
+- Une requête pour `/static/js/app.js` utilisera le bloc `location ^~ /static/`.
+- Une requête pour `/images/photo.JPG` utilisera le bloc regex `location ~* \.(jpg|png)$`.
+- Une requête pour `/contact` utilisera le bloc `location /`.
+
+> **À retenir :**  
+> Placez la directive `root` dans le bloc `location` le plus précis si vous souhaitez servir des fichiers différents selon le chemin.  
+> Comprendre l’ordre de priorité des locations est essentiel pour éviter des comportements inattendus lors de la configuration de Nginx.
 
 ## La directive index
 
@@ -206,22 +402,70 @@ La directive `index` définit le fichier par défaut à servir. Exemple :
 index index.html;
 ```
 
+La directive `index` permet de définir le ou les fichiers à servir par défaut lorsqu'une requête cible un répertoire (par exemple `/` ou `/blog/`). Si le fichier spécifié existe dans le répertoire, il sera renvoyé automatiquement sans que l'utilisateur ait à préciser son nom dans l'URL.
 
+**Exemple :**
+```nginx
+server {
+    listen 80;
+    server_name exemple.fr;
+
+    root /var/www/exemple.fr;
+    index index.html;
+
+    location /blog/ {
+        index blog.html;
+    }
+}
+```
+
+**Explications :**
+- Ici, la racine du site est `/var/www/exemple.fr`.
+- Pour une requête vers `http://exemple.fr/`, Nginx cherchera à servir `/var/www/exemple.fr/index.html` (grâce à `index index.html;`).
+- Pour une requête vers `http://exemple.fr/blog/`, Nginx cherchera à servir `/var/www/exemple.fr/blog/blog.html` (grâce à `index blog.html;` dans le bloc `location /blog/`).
+- Si le fichier spécifié par `index` n'existe pas, Nginx passe au suivant dans la liste (si plusieurs fichiers sont listés), ou retourne une erreur si aucun n'est trouvé.
+
+> **À retenir :**  
+> Placez la directive `index` dans le bloc le plus précis pour personnaliser le fichier d'accueil selon le chemin demandé.  
+> Vous pouvez spécifier plusieurs fichiers, séparés par des espaces, pour définir un ordre de priorité.
 
 ## La directive try_files
 
-La directive `try_files` permet de tester plusieurs fichiers avant de retourner une réponse. Exemple :
+La directive `try_files` permet à Nginx de tester plusieurs chemins de fichiers pour une même requête, dans l'ordre, et de servir le premier fichier trouvé. Si aucun fichier n'est trouvé, une action de secours (comme retourner une erreur ou rediriger) peut être définie.
+
+**Syntaxe :**
 ```nginx
-try_files $uri $uri/ =404;
+try_files chemin1 chemin2 ... action_de_secours;
 ```
 
+**Exemple :**
+```nginx
+location / {
+    try_files $uri $uri/ =404;
+}
+```
+- `$uri` : teste si le fichier demandé existe tel quel.
+- `$uri/` : teste si un dossier correspondant existe (utile pour les répertoires).
+- `=404` : si rien n'est trouvé, retourne une erreur 404.
 
+**Utilisations courantes :**
+- Servir un fichier statique si présent, sinon passer à un index ou à un script (ex : `index.php`).
+- Gérer les routes d'applications SPA (Single Page Application) en renvoyant toujours `index.html` si le fichier n'existe pas.
+
+**Exemple avancé :**
+```nginx
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
+Ici, si le fichier ou le dossier n'existe pas, Nginx sert `/index.html` (pratique pour les applications front-end modernes).
+
+> **À retenir :**  
+> `try_files` est très utile pour contrôler précisément le comportement de Nginx selon la présence ou non de fichiers sur le disque, et pour éviter des erreurs 404 non désirées.
 
 ## Les variables
 
 Nginx fournit des variables comme `$uri`, `$host`, etc., pour personnaliser les configurations.
-
-
 
 ## Retourner des codes et rediriger
 
@@ -230,8 +474,6 @@ Utilisez `return` pour retourner un code HTTP ou rediriger :
 return 301 https://example.com;
 ```
 
-
-
 ## Les réécritures d'URI
 
 La directive `rewrite` permet de modifier les URI. Exemple :
@@ -239,13 +481,9 @@ La directive `rewrite` permet de modifier les URI. Exemple :
 rewrite ^/old/(.*)$ /new/$1 permanent;
 ```
 
-
-
 ## Les réécritures de réponses HTTP
 
 Pour modifier les réponses HTTP, utilisez des modules comme `sub_filter`.
-
-
 
 ## La directive error_page
 
