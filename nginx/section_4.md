@@ -465,31 +465,260 @@ Ici, si le fichier ou le dossier n'existe pas, Nginx sert `/index.html` (pratiqu
 
 ## Les variables
 
-Nginx fournit des variables comme `$uri`, `$host`, etc., pour personnaliser les configurations.
+Nginx fournit de nombreuses variables prédéfinies qui permettent de personnaliser le comportement des configurations. Ces variables peuvent être utilisées dans les directives, les logs, les conditions, etc.
+
+### Variables prédéfinies courantes
+
+- **`$host`** : Le nom d’hôte de la requête (nom de domaine demandé).
+- **`$uri`** : L’URI de la requête (chemin demandé par le client).
+- **`$request_uri`** : L’URI complet de la requête, y compris la chaîne de requête.
+- **`$remote_addr`** : L’adresse IP du client.
+- **`$server_name`** : Le nom du serveur correspondant à la requête.
+- **`$args`** : Les arguments de la chaîne de requête (GET).
+- **`$document_root`** : Le chemin racine du document pour la requête en cours.
+- **`$request_method`** : La méthode HTTP utilisée (GET, POST, etc.).
+- **`$http_user_agent`** : L’User-Agent du client.
+
+**Exemple d’utilisation :**
+```nginx
+log_format custom '$remote_addr - $host [$time_local] "$request" $status $body_bytes_sent "$http_user_agent"';
+access_log /var/log/nginx/access.log custom;
+```
+
+### Utilisation dans la configuration
+
+Les variables peuvent être utilisées dans les chemins, les conditions, les logs, les redirections, etc.
+
+```nginx
+location /user/ {
+    alias /data/users/$arg_id/;
+}
+```
+Ici, `$arg_id` est une variable correspondant à un paramètre GET dans l’URL (ex : `/user/?id=42`).
+
+### Créer une variable personnalisée
+
+Vous pouvez définir vos propres variables avec la directive `set` :
+
+```nginx
+set $is_mobile 0;
+
+if ($http_user_agent ~* 'mobile') {
+    set $is_mobile 1;
+}
+```
+Ici, `$is_mobile` vaudra `1` si l’User-Agent contient "mobile".
+
+### Recharger la configuration après modification
+
+Après avoir modifié la configuration pour utiliser ou ajouter des variables, rechargez Nginx pour appliquer les changements :
+
+```bash
+sudo nginx -t    # Vérifie la syntaxe de la configuration
+sudo systemctl reload nginx   # Recharge la configuration sans couper les connexions
+sudo service nginx reload 
+```
+
+> **À retenir :**  
+> Les variables rendent la configuration Nginx flexible et dynamique. Utilisez-les pour adapter le comportement du serveur selon le contexte de la requête.
 
 ## Retourner des codes et rediriger
 
-Utilisez `return` pour retourner un code HTTP ou rediriger :
+La directive `return` permet à Nginx de renvoyer un code de statut HTTP, éventuellement accompagné d'un message ou d'une redirection vers une autre URL.
+
+### Syntaxe de la directive `return`
+
 ```nginx
-return 301 https://example.com;
+return [code [texte|URL]];
 ```
+- `code` : le code de statut HTTP à retourner (ex : 200, 301, 302, 404, 500…)
+- `texte` : un message texte court à afficher (optionnel)
+- `URL` : une URL de redirection (optionnel)
+
+**Exemples :**
+```nginx
+return 404;
+return 403 "Accès interdit";
+return 301 https://nouveau-domaine.com;
+return 302 /maintenance.html;
+```
+
+### Retourner un code d'erreur ou un message personnalisé
+
+Vous pouvez utiliser `return` pour renvoyer un code d'erreur simple :
+```nginx
+return 404;
+```
+Ou pour afficher un message personnalisé :
+```nginx
+return 403 "Accès interdit";
+```
+> Le message personnalisé doit être court et sans saut de ligne.
+
+### Redirection permanente (code 301)
+
+Pour indiquer que la ressource a changé d'adresse de façon permanente :
+```nginx
+return 301 https://nouveau-domaine.com/nouvelle-page;
+```
+
+### Redirection temporaire (code 302)
+
+Pour une redirection temporaire :
+```nginx
+return 302 /maintenance.html;
+```
+
+### Redirection vers un autre domaine
+
+Pour rediriger tout un site vers un autre domaine :
+```nginx
+server {
+    listen 80;
+    server_name ancien-domaine.com;
+    return 301 https://nouveau-domaine.com$request_uri;
+}
+```
+Ici, toutes les requêtes sont redirigées vers le nouveau domaine, en conservant le chemin et les paramètres.
+
+### Forcer le HTTPS
+
+Pour rediriger automatiquement tout le trafic HTTP vers HTTPS :
+```nginx
+server {
+    listen 80;
+    server_name monsite.fr www.monsite.fr;
+    return 301 https://$host$request_uri;
+}
+```
+Cela force l'utilisation de HTTPS pour tous les visiteurs.
 
 ## Les réécritures d'URI
 
-La directive `rewrite` permet de modifier les URI. Exemple :
+La directive `rewrite` permet de modifier l'URI (chemin de la requête) avant que Nginx ne recherche le fichier ou ne transmette la requête à un backend. Elle est très utile pour :
+
+- Rediriger d'anciennes URLs vers de nouvelles.
+- Simplifier ou masquer la structure réelle des fichiers.
+- Gérer des règles de routage avancées.
+
+### Syntaxe de base
+
 ```nginx
-rewrite ^/old/(.*)$ /new/$1 permanent;
+rewrite <motif_regex> <remplacement> [flag];
 ```
+- `<motif_regex>` : expression régulière pour faire correspondre l'URI.
+- `<remplacement>` : nouvelle URI ou URL.
+- `[flag]` : option de contrôle (`last`, `break`, `redirect`, `permanent`).
+
+### Exemples
+
+**Redirection interne :**
+```nginx
+rewrite ^/old/(.*)$ /new/$1 last;
+```
+- Toute requête vers `/old/quelquechose` sera traitée comme `/new/quelquechose` par Nginx.
+
+**Redirection permanente (301) :**
+```nginx
+rewrite ^/blog/(.*)$ https://blog.example.com/$1 permanent;
+```
+- Redirige toutes les requêtes `/blog/...` vers un autre domaine, avec un code 301.
+
+**Redirection temporaire (302) :**
+```nginx
+rewrite ^/promo/(.*)$ /nouvelle-promo/$1 redirect;
+```
+- Redirige temporairement vers une nouvelle URL.
+
+**Ajouter ou enlever www dans le nom de domaine :**
+
+*Forcer le www :*
+```nginx
+server {
+    listen 80;
+    server_name exemple.fr;
+    return 301 https://www.exemple.fr$request_uri;
+}
+```
+Toutes les requêtes vers `exemple.fr` sont redirigées vers `www.exemple.fr`.
+
+*Enlever le www :*
+```nginx
+server {
+    listen 80;
+    server_name www.exemple.fr;
+    return 301 https://exemple.fr$request_uri;
+}
+```
+Toutes les requêtes vers `www.exemple.fr` sont redirigées vers `exemple.fr`.
+
+### Flags courants
+
+- `last` : Arrête la réécriture et reprend le traitement des locations avec la nouvelle URI.
+- `break` : Arrête la réécriture sans reprendre le traitement des locations.
+- `redirect` : Redirection temporaire (302).
+- `permanent` : Redirection permanente (301).
+
+> **À retenir :**  
+> Utilisez `rewrite` pour adapter dynamiquement les chemins d'accès, gérer les migrations d'URL ou mettre en place des règles de routage avancées.
 
 ## Les réécritures de réponses HTTP
 
-Pour modifier les réponses HTTP, utilisez des modules comme `sub_filter`.
+Pour modifier le contenu des réponses HTTP (par exemple, remplacer du texte dans les pages HTML renvoyées), Nginx propose le module `sub_filter`. Ce module permet de rechercher et remplacer dynamiquement du texte dans le corps des réponses transmises par le serveur ou un proxy.
+
+### Utilisation de `sub_filter`
+
+Le module `sub_filter` s'utilise généralement dans un contexte de reverse proxy, par exemple pour adapter des liens ou des ressources dans les pages HTML générées par une application backend.
+
+**Exemple :**
+```nginx
+location / {
+    proxy_pass http://backend_server;
+    sub_filter 'http://' 'https://';
+    sub_filter_once off;
+}
+```
+- `sub_filter 'http://' 'https://';` : remplace toutes les occurrences de `http://` par `https://` dans la réponse.
+- `sub_filter_once off;` : applique le remplacement à toutes les occurrences (et pas seulement la première).
+
+> **À savoir :**  
+> - Le module `sub_filter` doit être activé (inclus dans la version de Nginx utilisée).
+> - Il fonctionne uniquement sur les réponses de type `text/html`, `text/plain`, etc. (voir la directive `sub_filter_types` pour ajuster).
+> - Pratique pour adapter des liens, des ressources statiques ou injecter des scripts dans des pages générées dynamiquement.
 
 ## La directive error_page
 
-La directive `error_page` permet de personnaliser les pages d'erreur. Exemple :
+La directive `error_page` permet de personnaliser la réponse envoyée par Nginx lorsqu'une erreur HTTP se produit (par exemple : 404, 500, 502…). Elle permet d'afficher une page HTML spécifique ou de rediriger vers une autre URL en cas d'erreur.
+
+### Syntaxe
+
 ```nginx
-error_page 404 /404.html;
+error_page code_erreur [code_supplémentaires] chemin_ou_URL;
 ```
+
+- `code_erreur` : le code d'erreur HTTP à intercepter (ex : 404, 500, 502…)
+- `chemin_ou_URL` : le chemin local ou l'URL de la page à afficher
+
+### Exemple courant : page 404 personnalisée
+
+```nginx
+server {
+    listen 80;
+    server_name exemple.fr;
+
+    root /var/www/exemple.fr;
+
+    error_page 404 /404.html;
+
+    location = /404.html {
+        internal;
+    }
+}
+```
+- Ici, si une page n'est pas trouvée (erreur 404), Nginx sert le fichier `/var/www/exemple.fr/404.html`.
+- L'option `internal` empêche l'accès direct à la page d'erreur via l'URL.
+
+> **À retenir :**  
+> Utilisez `error_page` pour améliorer l'expérience utilisateur en proposant des pages d'erreur claires et personnalisées.
 
 
