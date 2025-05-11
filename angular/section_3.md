@@ -115,8 +115,6 @@ logClicks(event: MouseEvent) {
 
 ### Double liaison [(ngModel)]
 
-En Angular, la double liaison de données (ou two-way data binding) permet une synchronisation bidirectionnelle entre les données du composant (modèle) et l'interface utilisateur (vue). Elle combine la liaison de propriété ([property]) et la liaison d'événement ((event)), symbolisée par la syntaxe [( )], souvent appelée "banane dans une boîte".
-
 En Angular, la **double liaison de données** (ou *two-way data binding*) permet une synchronisation bidirectionnelle entre les données du composant (modèle) et l'interface utilisateur (vue). Elle combine la liaison de propriété (`[property]`) et la liaison d'événement (`(event)`), symbolisée par la syntaxe `[( )]`, souvent appelée *"banane dans une boîte"*.
 
 `ngModel` est une directive Angular utilisée pour la double liaison dans les formulaires. Voici un cas concret :
