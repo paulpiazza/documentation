@@ -144,7 +144,7 @@ export class AppComponent {
 }
 ```
 
-### Host Binding/Listerners
+### Simple Host
 
 En Angular, la propriété **`host`** dans le décorateur **`@Component`** permet de définir des interactions entre le composant et son élément hôte (l'élément DOM dans lequel le composant est instancié).
 
