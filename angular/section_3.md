@@ -40,7 +40,18 @@ Non compatible avec les attributs HTML, il faudra utiliser *property binding*.
 <p>Display : {{ 5 + 10 }}</p>
 <p>Display : {{ isActive ? 'yes' : 'No' }}</p>
 <p>Display : {{ user?.cardNumber }} </p>
+```
 
+```typescript
+// compoment
+export class MenuItemComponent {
+  // Déclaration basique
+  isActive: boolean = false;
+  user = {name: "Joe"};
+  function calculator(nb: number): number {
+    return nb * 2;
+  }
+}
 ```
 
 **Sécurité** :  
