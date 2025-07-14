@@ -1,8 +1,17 @@
 {
+    "name": "documentation-site",
+    "version": "1.0.0",
+    "type": "module",
     "scripts": {
         "dev": "compiiile dev",
         "build": "compiiile build",
-        "preview": "compiiile preview"
+        "preview": "compiiile preview",
+        "clean": "rm -rf .compiiile/dist",
+        "build:clean": "npm run clean && npm run build",
+        "deploy:test": "./deploy-netlify.sh"
+    },
+    "engines": {
+        "node": ">=18.0.0"
     },
     "dependencies": {
         "@compiiile/compiiile": "^2.18.1"

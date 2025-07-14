@@ -1,0 +1,29 @@
+# Netlify Edge Functions et optimisations (optionnel)
+# Décommentez les sections selon vos besoins
+
+# Exemple de redirection pour une SPA (si nécessaire)
+# /*    /index.html   200
+
+# Redirection de l'ancien chemin avec /docs vers la racine
+/docs/*  /:splat  301!
+
+# Headers de sécurité supplémentaires
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+
+# Cache optimal pour les assets
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache pour les fonts
+/_astro/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+/_astro/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/_astro/*.ttf
+  Cache-Control: public, max-age=31536000, immutable
+/_astro/*.eot
+  Cache-Control: public, max-age=31536000, immutable
