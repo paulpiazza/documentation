@@ -3,5 +3,8 @@
         "dev": "compiiile dev",
         "build": "compiiile build",
         "preview": "compiiile preview"
+    },
+    "dependencies": {
+        "@compiiile/compiiile": "^2.18.1"
     }
 }

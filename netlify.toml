@@ -1,5 +1,5 @@
 [build]
-  command = "npm list -g @compiiile/compiiile || npm install -g @compiiile/compiiile && compiiile build"
-  publish = "/.compiiile/dist"
+  command = "npm run build"
+  publish = ".compiiile/dist"
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "24"
