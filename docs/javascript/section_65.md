@@ -40,9 +40,9 @@ Now that we’re familiar with the idea of a comparator function, let’s take a
 
 #### Sorted in Ascending Order
 
-We’re going to start with one of the most intuitive orderings: ascending. This sort will yield the same results as using a sorting algorithm like quicksort or merge sort. The first step is to create the comparator function. Given inputs `a` and `b`, the pseudocode is as follows:
+We’re going to start with one of the most intuitive orderings: ascending. This sort will yield the same results as using a sorting algorithm like quicksort or merge sort. The first step is to create the comparator function. Given inputs `a` and `b`, the plaintextcode is as follows:
 
-```pseudo
+```plaintext
 if a is less than b
   return negative number
 if a is greater than b
@@ -91,7 +91,7 @@ In order to do this, we are going to use an `explicitSortWithComparator()` fun
 
 The `explicitComparator()` function will find the indices of `a` and `b` in the `order` array (if they exist) and return the difference between them:
 
-```pseudo
+```plaintext
 indexA and indexB are initialized to the length of the order array
 if a is in order
   indexA = a's index in order

@@ -289,7 +289,7 @@ For instance, you might need to configure:
 
 **Example: Enabling SSL connections**
 
-```conf
+```plaintext
 ssl = on
 ssl_cert_file = '/path/to/server.crt'
 ssl_key_file = '/path/to/server.key'

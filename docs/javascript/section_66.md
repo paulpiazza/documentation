@@ -18,7 +18,7 @@ The Fibonacci series is a classic mathematical series in which the next number i
 
 It can be calculated iteratively by summing the two previous numbers, or the `n`th Fibonacci number can be calculated recursively:
 
-```pseudo
+```plaintext
 function fib(n)
   if n is 1 or 0:
     return n
@@ -30,7 +30,7 @@ This technique breaks up calculating the `n`th number into many smaller problem
 
 Although this technique will certainly work to find the correct number, as `n` grows, the number of recursive calls grows very quickly. Let’s visualize all the function calls if we were to calculate the fourth Fibonacci number:
 
-```pseudo
+```plaintext
 fib(4) -> fib(3) + fib(2)
   fib(3) -> fib(2) + fib(1)
     fib(2) -> fib(1) + fib(0)
@@ -57,9 +57,9 @@ To begin, we’ll use a plain JavaScript object to store the memoized values. We
 const memo = {};
 ```
 
-In pseudocode, our approach to memoization will look something like this:
+In plaintextcode, our approach to memoization will look something like this:
 
-```pseudo
+```plaintext
 Create a memo object
 
 function fibonacci(n)

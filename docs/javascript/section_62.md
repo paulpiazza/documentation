@@ -226,7 +226,7 @@ For this lesson, we will implement the inorder option. The advantage of this opt
 
 To illustrate, let’s say we have a binary tree that looks like this:
 
-```pseudo
+```plaintext
            15
      /------+-----\
     12            20
@@ -238,19 +238,19 @@ To illustrate, let’s say we have a binary tree that looks like this:
 
 We begin by traversing the left subtree at each level, which brings us to `8`, `10` and `11` reside. The [inorder traversal](https://www.codecademy.com/resources/docs/general/binary-search-tree/inorder-traversal) would be:
 
-```pseudo
+```plaintext
 8, 10, 11
 ```
 
 We ascend one level up to visit root node `12` before we descend back to the bottom where the right subtree of `12`, `13`, and `14` resides. Inorder traversal continues with:
 
-```pseudo
+```plaintext
 12, 12, 13, 14
 ```
 
 We again ascend one level up to visit root node `15` before we traverse the right subtree starting at the bottom level again. We continue with the bottom leftmost subtree where `16`, `18` and `19` reside. The inorder traversal continues with:
 
-```pseudo
+```plaintext
 15, 16, 18, 19
 ```
 
@@ -258,13 +258,13 @@ We ascend one level up to visit root node `20` before we descend back to the b
 
 Traversal finishes with:
 
-```pseudo
+```plaintext
 20, 21, 22, 25
 ```
 
 The entire traversal becomes:
 
-```pseudo
+```plaintext
 8, 10, 11, 12, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 25
 ```
 

@@ -4,7 +4,7 @@ description: Slim notes.
 order: 70
 ---
 
- See what you’ll be learning in the API Development with Swagger and OpenAPI Unit.
+See what you’ll be learning in the API Development with Swagger and OpenAPI Unit.
 
 > A portion of the content of this Unit comes from articles originally posted by [SmartBear](https://smartbear.com/). SmartBear is a software quality company offering tools for teams to better design, develop, and test their software at scale. You can learn more by visiting [SmartBear’s blog](https://smartbear.com/blog/).
 

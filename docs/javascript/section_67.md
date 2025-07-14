@@ -28,7 +28,7 @@ Let’s say that you have a knapsack that can only carry 5 pounds, and the house
 
 This information can be summarized as follows:
 
-```pseudo
+```plaintext
 weightCap = 5 
 weights = [1, 3, 5]
 values = [250, 300, 500]
@@ -79,9 +79,9 @@ But what exactly do the rows and columns represent? The rows represent the items
 
 There are some elements in the matrix that will be easy to fill. Every element in the zeroeth row represents a subproblem with 0 items to consider, so there is no value. Likewise, every element in the zeroeth column represents a subproblem where our knapsack has a capacity of 0, giving us no value to take. Because of this, we start by filling the zeroeth row and column with `0`.
 
-The pseudocode for the entire algorithm is as follows:
+The plaintextcode for the entire algorithm is as follows:
 
-```pseudo
+```plaintext
 matrix = array with length equal to number of items
 for every number of items you can carry (index):
   fill matrix[index] with an array of length weightCap + 1

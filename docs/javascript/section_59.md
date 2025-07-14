@@ -294,7 +294,7 @@ Getting an integer representing an index can be done by summing up each characte
 
 The hashing function should follow this logic:
 
-```pseudo
+```plaintext
 declare hashCode variable with value of 0
 
 for each character in the key
@@ -313,7 +313,7 @@ In our hash map implementation, we’re going to have our hashing function handl
 
 The updated `.hash()` should follow these steps:
 
-```pseudo
+```plaintext
 initialize hashCode variable to 0
 
 for each character in the key
@@ -353,7 +353,7 @@ We now have everything we need to find a place in the hash map array to store a 
 
 A general outline of how `.assign()` will work is this:
 
-```pseudo
+```plaintext
 store the hashed key in a variable arrayIndex
 assign the value to the element at arrayIndex in the hash map
 ```
@@ -378,7 +378,7 @@ Our first step in implementing a collision strategy is updating our constructor 
 
 A collision-proof `.assign()` should look like this to start:
 
-```pseudo
+```plaintext
 store the hashed key in a variable arrayIndex
 store linked list at arrayIndex in a variable linkedList
 
@@ -405,7 +405,7 @@ After both cases, if we haven’t already exited the loop, we should reset the l
 
 With this in mind, the `.assign()` code for looping should look like this:
 
-```pseudo
+```plaintext
 store the head node of the linked list in a variable current
 
 while there is a current node
@@ -425,7 +425,7 @@ To avoid this, we’ll search through the linked list at an index until we find 
 
 The `.retrieve()` method will follow this logic:
 
-```pseudo
+```plaintext
 store the hashed key in the constant arrayIndex
 store the head node of a list in the variable current
 
@@ -635,7 +635,7 @@ In a dataset of **fifteen** elements, we only made **three** comparisons. Wh
 
 The generic steps to execute in removing a child from a tree are as follows:
 
-```pseudo
+```plaintext
 If target child is an instance of TreeNode,
   Compare target child with each child in the children array
   Update the children array if target child is found
@@ -650,7 +650,7 @@ If target child is not found in the children array
 
 Breadth-first traversal visits each child in the `children` array starting from the first child before visiting their children and further layers until the bottom level is visited. The algorithm is as follows:
 
-```pseudo
+```plaintext
 Assign an array to contain the current root node
 While the array is not empty
   Extract the first tree node from the array
@@ -660,7 +660,7 @@ While the array is not empty
 
 Based on this tree displayed using `.print()`:
 
-```pseudo
+```plaintext
 15
 -- 3
 -- -- 6
@@ -675,7 +675,7 @@ Based on this tree displayed using `.print()`:
 
 we can traverse it breadth-wise (level to level) to produce this result:
 
-```pseudo
+```plaintext
 15
 3
 12

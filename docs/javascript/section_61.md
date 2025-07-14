@@ -45,7 +45,7 @@ Recursion is a strategy for solving problems by defining the problem in terms of
 
 How would we get that sum of remaining elements? Easy! We’d take the first element of the remaining elements and add it to the… Maybe you can understand why recursion can be a tricky subject!
 
-In programming, recursion means a function definition will include an invocation of the function **within its own body.** Here’s a pseudo-code example:
+In programming, recursion means a function definition will include an invocation of the function **within its own body.** Here’s a plaintext-code example:
 
 ```
 define function, speller  if there are no more letters    print "all done"  print the first letter  invoke speller with the given name minus the first letter
@@ -80,7 +80,7 @@ This section solves **a piece** of the problem. If we want to spell someone’
 
 This section is the _recursive_ step, calling the function with arguments which bring us closer to the base case. In this example, we’re reducing the length of the name by a single letter. Eventually, there will be a function call with no letters given as the argument.
 
-For comparison’s sake, here is pseudo-code for an _iterative_ approach to the same problem:
+For comparison’s sake, here is plaintext-code for an _iterative_ approach to the same problem:
 
 ```
  define function, speller   for each letter in the name argument     print the letter   print "all done"

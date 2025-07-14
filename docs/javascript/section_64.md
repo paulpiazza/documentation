@@ -73,7 +73,7 @@ The previous solution had a quadratic runtime, but it’s possible to solve this
 
 We’ll start by creating the following variables:
 
-```pseudo
+```plaintext
 totalWater = 0
 leftPointer = 0 
 rightPointer = heights.length - 1
@@ -83,7 +83,7 @@ rightBound = 0
 
 `leftPointer` and `rightPointer` will start at the beginning and end of the array, respectively, and move towards each other until they meet. The algorithm is as follows:
 
-```pseudo
+```plaintext
 while leftPointer < rightPointer
   if the element at leftPointer <= the element at rightPointer
     if the element is larger than leftBound, set leftBound to the element
@@ -99,7 +99,7 @@ return totalWater
 
 Coding question
 
-Using the pseudocode above, finish the `efficientSolution()` function. Make sure you run it on the given array first! (If you run into an infinite loop, you can refresh the page to stop it.)
+Using the plaintextcode above, finish the `efficientSolution()` function. Make sure you run it on the given array first! (If you run into an infinite loop, you can refresh the page to stop it.)
 
 Congrats! You created the optimized solution to the capturing rain water problem. This solution has a linear time complexity because it only loops through the array one time. Additionally, both this and the naive solution have a constant space complexity of `O(1)`. There are other solutions that have also have linear time but then have a linear space complexity, like a solution that uses arrays to keep track of the left and right bounds. How do you think that solution would work?
 
