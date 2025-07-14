@@ -3,6 +3,7 @@ title: Simple Operations
 description: .NET framework
 order: 5
 ---
+
 ## Operations en C#
 ### Opérations simples 
 
